@@ -214,6 +214,13 @@ kernel_config_uri() {
 	kernel_config_uri="${uri}"
 }
 
+kernel_config_file() {
+	do_kernel=yes
+	local file=$1
+	
+	kernel_config_file="${file}"
+}
+
 kernel_sources() {
 	do_kernel=yes
 	local pkg=$1
