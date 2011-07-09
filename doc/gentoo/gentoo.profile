@@ -16,7 +16,7 @@ mountfs /dev/sda3 ext4 / noatime
 
 stage_uri		http://distfiles.gentoo.org/releases/x86/autobuilds/current-stage3/stage3-i486-20110705.tar.bz2
 #tree_type		sync
-tree_type       http://distfiles.gentoo.org/releases/snapshots/current/portage-latest.tar.bz2
+tree_type      snapshot http://distfiles.gentoo.org/releases/snapshots/current/portage-latest.tar.bz2
 #kernel_config_uri       http://www.openchill.org/kconfig.2.6.30
 kernel_config_file      /dotconfig
 kernel_sources		gentoo-sources
