@@ -232,6 +232,15 @@ kernel_config_uri - Specifies the URI to a custom kernel config
   Parameters:
     uri - URI to the location of the custom kernel config
 
+===============================================================
+kernel_config_file - Specifies the file to a custom kernel config
+
+  Usage:
+    kernel_config_file <path>
+
+  Parameters:
+    path - path to the location of the custom kernel config
+
 =================================================================
 kernel_sources - Specifies the kernel sources to use (defaults to
                  gentoo-sources)
