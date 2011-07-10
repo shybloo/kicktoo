@@ -287,14 +287,14 @@ fetch_repo_tree() {
         fi
 }
 
-unpack_repo_tree() {
-    debug unpack_repo_tree "extracting tree"
-    if [ "${tree_type}" = "snapshot" ] ; then
-        spawn "tar xjf ${chroot_dir}/$(get_filename_from_uri ${portage_snapshot_uri}) -C ${chroot_dir}/usr" || die "could not unpack portage snapshot"
-    fi
-}
+#unpack_repo_tree() {
+#    debug unpack_repo_tree "extracting tree"
+#    if [ "${tree_type}" = "snapshot" ] ; then
+#        spawn "tar xjf ${chroot_dir}/$(get_filename_from_uri ${portage_snapshot_uri}) -C ${chroot_dir}/usr" || die "could not unpack portage snapshot"
+#    fi
+#}
 
-unpack_repo_tree2() {
+unpack_repo_tree() {
     debug unpack_repo_tree "extracting tree"
     if [ "${tree_type}" = "snapshot" ] ; then
         local tarball=$(get_filename_from_uri ${portage_snapshot_uri})
@@ -311,7 +311,6 @@ unpack_repo_tree2() {
             spawn "unlzma ${chroot_dir}/${tarball}"                             || die "Could not unlzma portage tarball"
             spawn "tar xpf ${chroot_dir}/${tarball%.*} -C ${chroot_dir}/usr"    || die "Could not untar portage tarball"
         fi
-
     fi
 }
 
