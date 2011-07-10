@@ -167,19 +167,19 @@ else
     fi
 
     # if pvcreate is missing, only exit in case of --lvm
-    if [ "${do_lvm}" == "yes" ] ; then
+    if [ "${do_lvm}" == "yes" ]; then
         has "pvcreate"
     fi
 
     # if cryptsetup is missing, only exit in case of --luks
-    if [ "${do_luks}" == "yes" ] ; then
+    if [ "${do_luks}" == "yes" ]; then
             has "cryptsetup"
     fi
 
     # if dist=exherbo, check we have unxz
-    if [ "${distro}" == "exherbo" ] ; then
-            has "unxz"
-    fi
+#    if [ "${distro}" == "exherbo" ] ; then
+#            has "unxz"
+#    fi
 
     arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
 
@@ -190,77 +190,77 @@ else
     fi
 fi
 
-debug main "Pushing ${distro} system for ${arch}"
+debug main "Pushing system for ${arch}"
 
-run_pre_install_script             "Running pre-install script if any"
-if [ "${do_part}" == "yes" ] ; then
-    runstep partition         "Partitioning"
+run_pre_install_script              "Running pre-install script if any"
+if [ "${do_part}" == "yes" ]; then
+    runstep partition               "Partitioning"
 fi
-if [ "${do_raid}" == "yes" ] ; then
-    runstep setup_mdraid         "Setting up RAID arrays"
+if [ "${do_raid}" == "yes" ]; then
+    runstep setup_mdraid            "Setting up RAID arrays"
 fi
-if [ "${do_lvm}" == "yes" ] ; then
-    runstep setup_lvm         "Setting up LVM volumes"
+if [ "${do_lvm}" == "yes" ]; then
+    runstep setup_lvm               "Setting up LVM volumes"
 fi
-if [ "${do_luks}" == "yes" ] ; then
-    runstep luks_devices         "Encrypting devices"
+if [ "${do_luks}" == "yes" ]; then
+    runstep luks_devices            "Encrypting devices"
 fi
-if [ "${do_format}" == "yes" ] ; then
-    runstep format_devices         "Formatting devices"
+if [ "${do_format}" == "yes" ]; then
+    runstep format_devices          "Formatting devices"
 fi
-if [ "${do_localmounts}" == "yes" ] ; then
-    runstep mount_local_partitions     "Mounting local partitions"
+if [ "${do_localmounts}" == "yes" ]; then
+    runstep mount_local_partitions  "Mounting local partitions"
 fi
-if [ "${do_netmounts}" == "yes" ] ; then
-    runstep mount_network_shares     "Mounting network shares"
+if [ "${do_netmounts}" == "yes" ]; then
+    runstep mount_network_shares    "Mounting network shares"
 fi
-if [ "${do_stage_uri}" == "yes" ] || [ "${do_stage_path}" == "yes" ] ; then
-    runstep fetch_stage_tarball    "Fetching stage tarball"
-    runstep unpack_stage_tarball     "Unpacking stage tarball"
-    runstep prepare_chroot         "Preparing chroot"
-    runstep setup_fstab        "Setting up /etc/fstab"
+if [ "${do_stage_uri}" == "yes" ] || [ "${do_stage_path}" == "yes" ]; then
+    runstep fetch_stage_tarball     "Fetching stage tarball"
+    runstep unpack_stage_tarball    "Unpacking stage tarball"
+    runstep prepare_chroot          "Preparing chroot"
+    runstep setup_fstab             "Setting up /etc/fstab"
 fi
-if [ "${do_tree}" == "yes" ] ; then
-    runstep fetch_repo_tree     "Fetching repository tree"
-    runstep unpack_repo_tree    "Unpacking repository tree"
+if [ "${do_tree}" == "yes" ]; then
+    runstep fetch_repo_tree         "Fetching repository tree"
+    runstep unpack_repo_tree        "Unpacking repository tree"
 fi
-if [ "${do_luks}" == "yes" ] ; then
-    runstep install_cryptsetup     "Installing cryptsetup"
+if [ "${do_luks}" == "yes" ]; then
+    runstep install_cryptsetup      "Installing cryptsetup"
 fi
-if [ "${do_kernel}" == "yes" ] ; then
-    runstep build_kernel         "Building kernel"
+if [ "${do_kernel}" == "yes" ]; then
+    runstep build_kernel            "Building kernel"
 fi
-if [ "${do_postnet}" == "yes" ] ; then
-    runstep setup_network_post     "Setting up post-install networking"
+if [ "${do_postnet}" == "yes" ]; then
+    runstep setup_network_post      "Setting up post-install networking"
 fi
-if [ "${do_password}" == "yes" ] ; then
+if [ "${do_password}" == "yes" ]; then
     runstep setup_root_password     "Setting up root password"
 fi
-if [ "${do_tz}" == "yes" ] ; then
-    runstep setup_timezone         "Setting up timezone"
+if [ "${do_tz}" == "yes" ]; then
+    runstep setup_timezone          "Setting up timezone"
 fi
-if [ "${do_keymap}" == "yes" ] ; then
-    runstep setup_keymap         "Setting up keymap"
+if [ "${do_keymap}" == "yes" ]; then
+    runstep setup_keymap            "Setting up keymap"
 fi
-if [ "${do_host}" == "yes" ] ; then
-    runstep setup_host         "Setting up hostname"
+if [ "${do_host}" == "yes" ]; then
+    runstep setup_host              "Setting up hostname"
 fi
-if [ "${do_bootloader}" == "yes" ] ; then
-    runstep install_bootloader     "Compiling bootloader"
-    runstep configure_bootloader     "Configuring bootloader"
+if [ "${do_bootloader}" == "yes" ]; then
+    runstep install_bootloader      "Compiling bootloader"
+    runstep configure_bootloader    "Configuring bootloader"
 fi
-if [ "${do_xpkg}" == "yes" ] ; then
-    runstep install_extra_packages     "Compiling extra packages"
+if [ "${do_xpkg}" == "yes" ]; then
+    runstep install_extra_packages  "Compiling extra packages"
 fi
-if [ "${do_services}" == "yes" ] ; then
+if [ "${do_services}" == "yes" ]; then
     runstep add_and_remove_services "Adding and removing services"
 fi
 runstep run_post_install_script     "Running post-install script if any"
-runstep finishing_cleanup         "Cleaning up"
+runstep finishing_cleanup           "Cleaning up"
 
-notify                     "Install complete!"
+notify                              "Install complete!"
 
 if [ "${reboot}" == "yes" ]; then
-    notify                 "Rebooting..."
+    notify                          "Rebooting..."
     reboot
 fi
