@@ -124,6 +124,7 @@ format_devices() {
 				warn "don't know how to format ${devnode} as ${fs}"
 		esac
 		if [ -n "${formatcmd}" ]; then
+                        sleep 0.1 # this helps not breaking formatting
 			spawn "${formatcmd}" || die "could not format ${devnode} with command: ${formatcmd}"
 		fi
 	done
