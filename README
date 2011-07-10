@@ -1,0 +1,22 @@
+Kicktoo is meant to automate the manual steps required to build a working Portage based distro.
+
+WARNING: You should NOT run it on anything else than a LiveCD.
+
+To use Kicktoo:
+
+1) Download a Linux LiveCD, preferably SysrescueCD or Ubuntu
+
+2) Boot the LiveCD
+
+3) Setup network connectivity
+
+4) Download Kicktoo from github.com
+   # git clone git://github.com/r1k0/kicktoo.git
+
+5) Customize one of the default profiles
+   # vim kicktoo/profiles/gentoo/gentoo.profile
+
+6) Run Kicktoo
+   # ./kicktoo -v profiles/gentoo/gentoo.profile
+
+7) Reboot
