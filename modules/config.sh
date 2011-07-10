@@ -163,10 +163,10 @@ stage_uri() {
     stage_uri="${uri}"
 }
 
-stage_path() {
-    local path=$1
+stage_file() {
+    local file=$1
 
-    stage_path="${path}"
+    stage_file="${file}"
 }
 
 tree_type() {

@@ -200,30 +200,30 @@ unpack_stage_tarball() {
         local extension=${stage_uri##*.}
 
         if [ "$extension" == "bz2" ] ; then
-            spawn "tar xjpf ${chroot_dir}/${tarball} -C ${chroot_dir}" || die "Could not untar stage tarball"
+            spawn "tar xjpf ${chroot_dir}/${tarball} -C ${chroot_dir}"      || die "Could not untar stage tarball"
         elif [ "$extension" == "gz" ] ; then
-            spawn "tar xzpf ${chroot_dir}/${tarball} -C ${chroot_dir}" || die "Could not untar stage tarball"
+            spawn "tar xzpf ${chroot_dir}/${tarball} -C ${chroot_dir}"      || die "Could not untar stage tarball"
         elif [ "$extension" == "xz" ] ; then
-            spawn "unxz ${chroot_dir}/${tarball}" || die "Could not unxz tarball"
-            spawn "tar xpf ${chroot_dir}/${tarball%.*} -C ${chroot_dir}" || die "Could not untar stage tarball"
+            spawn "unxz ${chroot_dir}/${tarball}"                           || die "Could not unxz stage tarball"
+            spawn "tar xpf ${chroot_dir}/${tarball%.*} -C ${chroot_dir}"    || die "Could not untar stage tarball"
         elif [ "$extension" == "lzma" ] ; then
-            spawn "unlzma ${chroot_dir}/${tarball}" || die "Could not unlzma tarball"
-            spawn "tar xpf ${chroot_dir}/${tarball%.*} -C ${chroot_dir}" || die "Could not untar stage tarball"
+            spawn "unlzma ${chroot_dir}/${tarball}"                         || die "Could not unlzma stage tarball"
+            spawn "tar xpf ${chroot_dir}/${tarball%.*} -C ${chroot_dir}"    || die "Could not untar stage tarball"
         fi
-    elif [ -n ${stage_path} ] ; then
-        spawn "cp ${stage_path} ${chroot_dir}" || die "Could not copy stage tarball"
-        local stage_name="$(basename ${stage_path})"
+    elif [ -n ${stage_file} ] ; then
+        spawn "cp ${stage_file} ${chroot_dir}"                              || die "Could not copy stage tarball"
+        local stage_name="$(basename ${stage_file})"
         local extension=${stage_name##*.}
 
         if [ "$extension" == "bz2" ] ; then
-            spawn "tar xjpf ${chroot_dir}/${stage_name} -C ${chroot_dir}" || die "Could not untar stage tarball"
+            spawn "tar xjpf ${chroot_dir}/${stage_name} -C ${chroot_dir}"   || die "Could not untar stage tarball"
         elif [ "$extension" == "gz" ] ; then
-            spawn "tar xzpf ${chroot_dir}/${stage_name%.*} -C ${chroot_dir}" || die "Could not untar stage tarball"
+            spawn "tar xzpf ${chroot_dir}/${stage_name%.*} -C ${chroot_dir}"|| die "Could not untar stage tarball"
         elif [ "$extension" == "xz" ] ; then
-            spawn "unxz ${chroot_dir}/${stage_name}" || die "Could not unxz tarball"
+            spawn "unxz ${chroot_dir}/${stage_name}"                        || die "Could not unxz stage tarball"
             spawn "tar xpf ${chroot_dir}/${stage_name%.*} -C ${chroot_dir}" || die "Could not untar stage tarball"
         elif [ "$extension" == "lzma" ] ; then
-            spawn "unlzma ${chroot_dir}/${stage_name}" || die "Could not unlzma tarball"
+            spawn "unlzma ${chroot_dir}/${stage_name}"                      || die "Could not unlzma stage tarball"
             spawn "tar xpf ${chroot_dir}/${stage_name%.*} -C ${chroot_dir}" || die "Could not untar stage tarball"
         fi
     fi
