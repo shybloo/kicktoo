@@ -1,6 +1,6 @@
-dist() {
-    distro=$1
-}
+#dist() {
+#    distro=$1
+#}
 
 part() {
     do_part=yes
@@ -320,17 +320,17 @@ sanity_check_config() {
             warn "  you must specify a stage_uri or a stage_path argument"
 #           fatal=1
     fi
-    if [ -z "${tree_type}" ] && [ "${distro}" == "gentoo" ]; then
-        warn "  tree_type not set..." #defaulting to sync"
-#       tree_type="sync"
-#   elif [ -z "${tree_type}" ] && [ "${distro}" == "funtoo" ]; then
-#       warn "funtoo tree_type not set...defaulting to current snapshot"
-#       tree_type="snapshot"
-#       portage_snapshot_uri="http://www.funtoo.org/linux/funtoo/snapshots/portage-current.tar.bz2"
-    elif [ -z "${tree_type}" ] && [ "${distro}" == "exherbo" ]; then
-        warn "  exherbo tree_type not set..." #defaulting to sync"
-        tree_type="sync"
-    fi
+#    if [ -z "${tree_type}" ] && [ "${distro}" == "gentoo" ]; then
+#        warn "  tree_type not set..." #defaulting to sync"
+##       tree_type="sync"
+##   elif [ -z "${tree_type}" ] && [ "${distro}" == "funtoo" ]; then
+##       warn "funtoo tree_type not set...defaulting to current snapshot"
+##       tree_type="snapshot"
+##       portage_snapshot_uri="http://www.funtoo.org/linux/funtoo/snapshots/portage-current.tar.bz2"
+#    elif [ -z "${tree_type}" ] && [ "${distro}" == "exherbo" ]; then
+#        warn "  exherbo tree_type not set..." #defaulting to sync"
+#        tree_type="sync"
+#    fi
     if [ "${tree_type}" = "snapshot" -a -z "${portage_snapshot_uri}" ]; then
         warn "  you must specify a portage snapshot URI with tree_type snapshot"
         fatal=1

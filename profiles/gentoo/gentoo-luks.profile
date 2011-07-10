@@ -1,7 +1,5 @@
 #!/bin/bash
 
-dist gentoo
-
 part sda 1 83 100M  # /boot
 part sda 2 82 2048M # swap
 part sda 3 83 +     # /
