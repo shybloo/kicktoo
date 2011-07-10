@@ -8,48 +8,48 @@ NORMAL='\033[0m'
 logfile=/tmp/install.log
 
 debug() {
-	local func=$1
-	local msg=$2
-	
-	if [ "${debug}" = "1" ]; then
-		echo "${func}(): ${msg}" >&2
-		log "${func}(): ${msg}"
-	fi
+    local func=$1
+    local msg=$2
+    
+    if [ "${debug}" = "1" ]; then
+        echo "${func}(): ${msg}" >&2
+        log "${func}(): ${msg}"
+    fi
 }
 
 notify() {
-	local msg=$1
-	
-	[ $quiet = 0 ] && echo -e " ${GOOD}*${NORMAL} ${msg}"
-	log "${msg}"
+    local msg=$1
+    
+    [ $quiet = 0 ] && echo -e " ${GOOD}*${NORMAL} ${msg}"
+    log "${msg}"
 }
 
 error() {
-	local msg=$1
-	
-	echo -e " ${BAD}*${NORMAL} ${msg}" >&2
-	log "Error: ${msg}"
+    local msg=$1
+    
+    echo -e " ${BAD}*${NORMAL} ${msg}" >&2
+    log "Error: ${msg}"
 }
 
 die() {
-	local msg=$1
-	
-	error "${msg}"
-	runstep failure_cleanup "Cleaning up after install failure"
-	exit 1
+    local msg=$1
+    
+    error "${msg}"
+    runstep failure_cleanup "Cleaning up after install failure"
+    exit 1
 }
 
 warn() {
-	local msg=$1
-	
-	[ $quiet = 0 ] && echo -e " ${WARN}*${NORMAL} ${msg}" >&2
-	log "Warning: ${msg}"
+    local msg=$1
+    
+    [ $quiet = 0 ] && echo -e " ${WARN}*${NORMAL} ${msg}" >&2
+    log "Warning: ${msg}"
 }
 
 log() {
-	local msg=$1
+    local msg=$1
 
-	if [ -n "${logfile}" -a -f "${logfile}" ]; then
-		echo "$(date): ${msg}" >> ${logfile} 2>/dev/null
-	fi
+    if [ -n "${logfile}" -a -f "${logfile}" ]; then
+        echo "$(date): ${msg}" >> ${logfile} 2>/dev/null
+    fi
 }
