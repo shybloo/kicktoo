@@ -62,8 +62,10 @@ fdisk_command() {
 	local cmd=$2
 	
 	debug fdisk_command "running fdisk command '${cmd}' on device ${device}"
+        partprobe
 	spawn "echo -en '${cmd}\nw\n' | fdisk ${device}"
-	return $?
+        partprobe
+#	return $?
 }
 
 sanity_check_config_partition() {
