@@ -45,7 +45,7 @@ human_size_to_mb() {
 
 format_devnode() {
 	local device=$1
-	local partition=$1
+	local partition=$2
 	local devnode=""
 	
 	echo "${device}" | grep -q '[0-9]$'
