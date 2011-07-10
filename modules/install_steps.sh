@@ -113,6 +113,9 @@ format_devices() {
                 #mkfs.ext4dev -j -m 1 -O dir_index,filetype,sparse_super,extents,huge_file /dev/mapper/root
                 formatcmd="mkfs.ext4 ${devnode}"
                 ;;
+            btrfs)
+                formatcmd="mkfs.btrfs ${devnode}"
+                ;;
             xfs)
                 formatcmd="mkfs.xfs ${devnode}"
                 ;;
@@ -124,7 +127,7 @@ format_devices() {
                 warn "don't know how to format ${devnode} as ${fs}"
         esac
         if [ -n "${formatcmd}" ]; then
-                        sleep 0.1 # this helps not breaking formatting
+            sleep 0.1 # this helps not breaking formatting
             spawn "${formatcmd}" || die "could not format ${devnode} with command: ${formatcmd}"
         fi
     done
