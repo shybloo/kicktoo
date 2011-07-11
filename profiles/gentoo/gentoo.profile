@@ -19,10 +19,9 @@ rootpw                  a
 bootloader              grub
 keymap	                be-latin1 # fr en
 hostname                gentoo
-extra_packages          dhcpcd syslog-ng vim
-#rcadd                   sshd default
-#rcadd                   vixie-cron default
-#rcadd                   syslog-ng default
+extra_packages          dhcpcd syslog-ng vim # openssh
+#rcadd                   sshd       default
+#rcadd                   syslog-ng  default
 
 # get kernel dotconfig from running kernel
 cat /proc/config.gz | gzip -d > /dotconfig
