@@ -19,7 +19,7 @@ rootpw                  a
 bootloader              grub
 keymap	                be-latin1 # fr en
 hostname                gentoo
-#extra_packages          openssh vixie-cron syslog-ng
+extra_packages          dhcpcd syslog-ng vim
 #rcadd                   sshd default
 #rcadd                   vixie-cron default
 #rcadd                   syslog-ng default
