@@ -14,7 +14,7 @@ mountfs /dev/sda3 ext4 / noatime
 wget ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/latest-stage3-i486.txt -O /tmp/stage3.version
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
-stage_uri               ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/${stage_version}
+stage_uri               ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/${latest_stage_version}
 tree_type               snapshot ftp://mirrors.kernel.org/gentoo/snapshots/portage-latest.tar.xz
 
 # get kernel dotconfig from running kernel
