@@ -243,6 +243,7 @@ keymap() {
 }
 
 hostname() {
+    do_host=yes
     local host=$1
 
     hostname="${host}"
