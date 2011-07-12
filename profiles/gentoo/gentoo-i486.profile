@@ -25,7 +25,7 @@ kernel_sources	        gentoo-sources
 timezone                UTC
 rootpw                  a
 bootloader              grub
-keymap	                en # be-latin1 fr
+keymap	                us # be-latin1 fr
 hostname                gentoo
 extra_packages          dhcpcd syslog-ng vim # openssh
 #rcadd                   sshd       default
