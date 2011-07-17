@@ -287,13 +287,6 @@ fetch_repo_tree() {
         fi
 }
 
-#unpack_repo_tree() {
-#    debug unpack_repo_tree "extracting tree"
-#    if [ "${tree_type}" = "snapshot" ] ; then
-#        spawn "tar xjf ${chroot_dir}/$(get_filename_from_uri ${portage_snapshot_uri}) -C ${chroot_dir}/usr" || die "could not unpack portage snapshot"
-#    fi
-#}
-
 unpack_repo_tree() {
     debug unpack_repo_tree "extracting tree"
     if [ "${tree_type}" = "snapshot" ] ; then
@@ -315,7 +308,8 @@ unpack_repo_tree() {
 }
 
 install_cryptsetup() {
-    spawn_chroot "emerge cryptsetup" || die "could not emerge cryptsetup"
+#    spawn_chroot "emerge cryptsetup" || die "could not emerge cryptsetup"
+    run_emerge cryptsetup || die "could not emerge cryptsetup"
 }
 
 build_kernel() {
