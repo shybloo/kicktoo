@@ -10,8 +10,16 @@ format /dev/mapper/root ext4
 mountfs /dev/sda1        ext2 /boot
 mountfs /dev/mapper/root ext4 / noatime
 
-stage_uri               ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/20110705/stage3-i486-20110705.tar.bz2
+# retrieve latest autobuild stage version for stage_uri
+wget ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/latest-stage3-i486.txt -O /tmp/stage3.version
+latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
+
+stage_uri               ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/${latest_stage_version}
 tree_type               snapshot ftp://mirrors.kernel.org/gentoo/snapshots/portage-latest.tar.xz
+
+# get kernel dotconfig from running kernel
+cat /proc/config.gz | gzip -d > /dotconfig
+
 kernel_config_file      /dotconfig
 rootpw                  a
 genkernel_opts          --luks # required
