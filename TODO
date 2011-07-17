@@ -58,7 +58,6 @@ DONE - gentoo/funtoo: chpasswd invalid option resolved on 0.2.4 using -pam and r
 ==========
 =PROFILES=
 ==========
-Tests done using =app-emulation/virtualbox-4.0.10
 
 ---- Gentoo stages (stable)
 [ ] - gentoo-amd64.profile
@@ -106,28 +105,43 @@ Tests done using =app-emulation/virtualbox-4.0.10
 
 ---- Funtoo stages (unstable)
 [ ] - ~funtoo-amd64.profile
+[ ] - ~funtoo-athlon-xp.profile
 [ ] - ~funtoo-core2.profile
+[ ] - ~funtoo-core2_32.profile
 [ ] - ~funtoo-opteron.profile
+[ ] - ~funtoo-opteron_32.profile
 [ ] - ~funtoo-x86.profile
 [ ] - ~funtoo-i686.profile
 [ ] - ~funtoo-luks-amd64.profile
+[ ] - ~funtoo-luks-athlon-xp.profile
 [ ] - ~funtoo-luks-core2.profile
+[ ] - ~funtoo-luks-core2_32.profile
 [ ] - ~funtoo-luks-opteron.profile
+[ ] - ~funtoo-luks-opteron_32.profile
 [ ] - ~funtoo-luks-x86.profile
 [ ] - ~funtoo-luks-i686.profile
 [ ] - ~funtoo-luks-noswap-amd64.profile
+[ ] - ~funtoo-luks-noswap-athlon-xp.profile
 [ ] - ~funtoo-luks-noswap-core2.profile
+[ ] - ~funtoo-luks-noswap-core2_32.profile
 [ ] - ~funtoo-luks-noswap-opteron.profile
+[ ] - ~funtoo-luks-noswap-opteron_32.profile
 [ ] - ~funtoo-luks-noswap-x68.profile
 [ ] - ~funtoo-luks-noswap-i686.profile
 [ ] - ~funtoo-lvm-amd64.profile
+[ ] - ~funtoo-lvm-athlon-xp.profile
 [ ] - ~funtoo-lvm-core2.profile
+[ ] - ~funtoo-lvm-core2_32.profile
 [ ] - ~funtoo-lvm-opteron.profile
+[ ] - ~funtoo-lvm-opteron_32.profile
 [ ] - ~funtoo-lvm-x86.profile
 [ ] - ~funtoo-lvm-i686.profile
 [ ] - ~funtoo-noboot-amd64.profile
+[ ] - ~funtoo-noboot-athlon-xp.profile
 [ ] - ~funtoo-noboot-core2.profile
+[ ] - ~funtoo-noboot-core2_32.profile
 [ ] - ~funtoo-noboot-opteron.profile
+[ ] - ~funtoo-noboot-opteron_32.profile
 [ ] - ~funtoo-noboot-x86.profile
 [ ] - ~funtoo-noboot-i686.profile
 
