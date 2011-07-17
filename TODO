@@ -59,42 +59,51 @@ DONE - gentoo/funtoo: chpasswd invalid option resolved on 0.2.4 using -pam and r
 =TESTED=
 ========
 All tests:
- - validated using =app-emulation/virtualbox-ose-3.1.0
+ - validated using =app-emulation/virtualbox-ose-4.0.10
 
 ---- Gentoo profiles (stable)
------- x86
-DONE |- basic
-     |- luks
-     |- luks+noswap
-DONE |- lvm
-     |- dmraid
-     |- dmraid+luks
-     |- dmraid+lvm
+------ i486
+[X] |- basic
+[ ] |- noswap
+[ ] |- luks
+[ ] |- luks+noswap
+[ ] |- lvm
+[ ] |- dmraid
+[ ] |- dmraid+luks
+[ ] |- dmraid+lvm
+------ i686
+[ ] |- basic
+[ ] |- luks
+[ ] |- luks+noswap
+[ ] |- lvm
+[ ] |- dmraid
+[ ] |- dmraid+luks
+[ ] |- dmraid+lvm
 ------ amd64
-     |- basic
-     |- luks
-     |- lvm
-     |- dmraid
+[ ] |- basic
+[ ] |- luks
+[ ] |- lvm
+[ ] |- dmraid
 ------ hppa
 ------ sparc64
 
 ---- ~Funtoo profiles (unstable)
 ------ x86
-     |- basic
-     |- luks
-     |- luks+noswap
-     |- lvm
-     |- dmraid
+[ ] |- basic
+[ ] |- luks
+[ ] |- luks+noswap
+[ ] |- lvm
+[ ] |- dmraid
 ------ amd64
-     |- basic
-     |- luks
-     |- lvm
-     |- dmraid
+[ ] |- basic
+[ ] |- luks
+[ ] |- lvm
+[ ] |- dmraid
 ------ hppa
 ------ sparc64
 
 ---- Exherbo profile
 ------ x86
-DROP |- basic
+DROP|- basic
 ------ amd64
-DROP |- basic
+DROP|- basic
