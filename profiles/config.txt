@@ -333,5 +333,3 @@ use_linux32 - Enable the use of linux32 for doing 32ul installs on 64-bit boxes
 
   Usage:
     use_linux32
-
-
