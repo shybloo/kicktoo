@@ -55,55 +55,24 @@ DONE - rescue: need checking for cryptsetup device for modules/rescue.sh
 DONE - exherbo: support for /dev/pts (critical) => reverse change and add -o rbind to /dev instead of bind.
 DONE - gentoo/funtoo: chpasswd invalid option resolved on 0.2.4 using -pam and rebuilding shadow (see doc/~funtoo*profile patch inside)
 
-========
-=TESTED=
-========
-All tests:
- - validated using =app-emulation/virtualbox-ose-4.0.10
+==========
+=PROFILES=
+==========
+Tests done using =app-emulation/virtualbox-ose-4.0.10
 
----- Gentoo profiles (stable)
------- i486
-[X] |- basic
-[ ] |- noswap
-[ ] |- luks
-[ ] |- luks+noswap
-[ ] |- lvm
-[ ] |- dmraid
-[ ] |- dmraid+luks
-[ ] |- dmraid+lvm
------- i686
-[ ] |- basic
-[ ] |- luks
-[ ] |- luks+noswap
-[ ] |- lvm
-[ ] |- dmraid
-[ ] |- dmraid+luks
-[ ] |- dmraid+lvm
------- amd64
-[ ] |- basic
-[ ] |- luks
-[ ] |- lvm
-[ ] |- dmraid
------- hppa
------- sparc64
-
----- ~Funtoo profiles (unstable)
------- x86
-[ ] |- basic
-[ ] |- luks
-[ ] |- luks+noswap
-[ ] |- lvm
-[ ] |- dmraid
------- amd64
-[ ] |- basic
-[ ] |- luks
-[ ] |- lvm
-[ ] |- dmraid
------- hppa
------- sparc64
-
----- Exherbo profile
------- x86
-DROP|- basic
------- amd64
-DROP|- basic
+---- Gentoo stages (stable)
+[ ] - gentoo-amd64.profile
+[X] - gentoo-i486.profile
+[ ] - gentoo-i686.profile
+[ ] - gentoo-luks-amd64.profile
+[ ] - gentoo-luks-i486.profile
+[ ] - gentoo-luks-i686.profile
+[ ] - gentoo-luks-noswap-amd64.profile
+[ ] - gentoo-luks-noswap-i468.profile
+[ ] - gentoo-luks-noswap-i686.profile
+[ ] - gentoo-lvm-amd64.profile
+[ ] - gentoo-lvm-i486.profile
+[ ] - gentoo-lvm-i686.profile
+[ ] - gentoo-noboot-amd64.profile
+[ ] - gentoo-noboot-i486.profile
+[ ] - gentoo-noboot-i686.profile
