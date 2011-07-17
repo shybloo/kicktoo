@@ -62,7 +62,7 @@ DONE - gentoo/funtoo: chpasswd invalid option resolved on 0.2.4 using -pam and r
 ---- Gentoo stages (stable)
 [ ] - gentoo-amd64.profile
 [X] - gentoo-i486.profile
-[ ] - gentoo-i686.profile
+[X] - gentoo-i686.profile
 [ ] - gentoo-luks-amd64.profile
 [ ] - gentoo-luks-i486.profile
 [ ] - gentoo-luks-i686.profile
