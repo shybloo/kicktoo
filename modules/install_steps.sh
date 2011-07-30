@@ -55,11 +55,13 @@ setup_lvm() {
         local volgroup_temp="lvm_volgroup_${volgroup}"
         local volgroup_devices="$(eval echo \${${volgroup_temp}})"
         for device in ${volgroup_devices}; do
+            sleep 1
             spawn "pvcreate -ffy ${device}" || die "could not run 'pvcreate' on ${device}"
         done
         spawn "vgcreate ${volgroup} ${volgroup_devices}" || die "could not create volume group '${volgroup}' from devices: ${volgroup_devices}"
     done
     for logvol in ${lvm_logvols}; do
+        sleep 1
         local volgroup="$(echo ${logvol} | cut -d '|' -f1)"
         local size="$(echo ${logvol} | cut -d '|' -f2)"
         local name="$(echo ${logvol} | cut -d '|' -f3)"
