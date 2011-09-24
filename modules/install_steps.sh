@@ -477,11 +477,11 @@ finishing_cleanup() {
     for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r); do
         # HACK: patching the fact that we get /mnt/gentoo/boot umounted twice :(
         #       we just remove the warning in case of /mnt/gentoo/boot
-        if [ "${mnt}" == "${chroot_dir}/boot"  ]; then
-            spawn "umount ${mnt}" &>/dev/null
-        else
+#        if [ "${mnt}" == "${chroot_dir}/boot"  ]; then
+#            spawn "umount ${mnt}" &>/dev/null
+#        else
             spawn "umount ${mnt}" || warn "  could not unmount ${mnt}"
-        fi
+#        fi
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
         spawn "swapoff ${swap}" || warn "  could not deactivate swap on ${swap}"
