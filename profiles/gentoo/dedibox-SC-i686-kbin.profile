@@ -37,5 +37,7 @@ hostname                gentoo
 #rcadd                   syslog-ng  default
 rcadd network default
 
-echo ifconfig_eth0=\"88.191.122.122 netmask 255.255.255.0 brd 88.191.122.255\" >> /etc/conf.d/network
-echo defaultroute=\"gw 88.191.122.1\" >> /etc/conf.d/network
+post_configure_bootloader() {
+    echo ifconfig_eth0=\"88.191.122.122 netmask 255.255.255.0 brd 88.191.122.255\" >> /etc/conf.d/network
+    echo defaultroute=\"gw 88.191.122.1\" >> /etc/conf.d/network
+}
