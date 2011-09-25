@@ -32,7 +32,7 @@ rootpw                  a
 bootloader              grub
 keymap                  fr
 hostname                gentoo
-extra_packages          dhcpcd syslog-ng vim # openssh
+#extra_packages          dhcpcd # syslog-ng vim # openssh
 #rcadd                   sshd       default
 #rcadd                   syslog-ng  default
 rcadd network default
