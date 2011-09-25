@@ -38,6 +38,8 @@ rcadd                   sshd       default
 rcadd                   network    default
 
 post_configure_bootloader() {
-    echo ifconfig_eth0=\"88.191.122.122 netmask 255.255.255.0 brd 88.191.122.255\" >> ${chroot_dir}/etc/conf.d/network
-    echo defaultroute=\"gw 88.191.122.1\" >> ${chroot_dir}/etc/conf.d/network
+    cat >> ${chroot_dir}/etc/conf.d/network <<EOF
+ifconfig_eth0="88.191.122.122 netmask 255.255.255.0 brd 88.191.122.255"
+defaultroute="gw 88.191.122.1"
+EOF
 }
