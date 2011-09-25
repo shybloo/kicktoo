@@ -225,7 +225,7 @@ systemmap_binary() {
     do_kbin=yes
     local path=$1
 
-    system.map_binary="${path}"
+    systemmap_binary="${path}"
 }
 
 kernel_config_uri() {
