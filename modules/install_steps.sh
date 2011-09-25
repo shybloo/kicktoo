@@ -428,11 +428,11 @@ configure_bootloader() {
         if detect_grub2; then
             bootloader="grub2"
         fi
-        if $(isafunc configure_bootloader_${bootloader}); then
+#        if $(isafunc configure_bootloader_${bootloader}); then
             configure_bootloader_${bootloader} || die "could not configure bootloader ${bootloader}"
-        else
-            die "I don't know how to configure ${bootloader}"
-        fi
+#        else
+#            die "I don't know how to configure ${bootloader}"
+#        fi
     fi
 }
 
