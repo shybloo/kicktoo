@@ -207,6 +207,13 @@ genkernel_opts() {
     genkernel_opts="${opts}"
 }
 
+kernel_binary() {
+    do_kbin=yes
+    local path=$1
+
+    kernel_binary="${path}"
+}
+
 kernel_config_uri() {
     do_kernel=yes
     local uri=$1

@@ -227,6 +227,9 @@ fi
 if [ "${do_luks}" == "yes" ]; then
     runstep install_cryptsetup      "Installing cryptsetup"
 fi
+if [ "${do_kbin}" == "yes" ]; then
+    runstep copy_kernel             "Copying precompiled kernel"
+fi
 if [ "${do_kernel}" == "yes" ]; then
     runstep build_kernel            "Building kernel"
 fi

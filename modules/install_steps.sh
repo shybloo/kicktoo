@@ -314,6 +314,10 @@ install_cryptsetup() {
     run_emerge cryptsetup || die "could not emerge cryptsetup"
 }
 
+copy_kernel() {
+    cp "${kernel_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
+}
+
 build_kernel() {
     if [ "${kernel_sources}" = "none" ]; then
         debug build_kernel "kernel_sources is 'none'...skipping kernel build"
