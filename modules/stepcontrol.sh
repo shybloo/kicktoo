@@ -1,11 +1,15 @@
 isafunc() {
     local func=$1
 
-    if [ -n "$(type ${func} 2>/dev/null | grep "function")" ]; then
-        return 0
-    else
-        return 1
-    fi
+    declare -f ${func} > /dev/null
+
+    return $?
+
+#    if [ -n "$(type ${func} 2>/dev/null | grep "function")" ]; then
+#        return 0
+#    else
+#        return 1
+#    fi
 }
 
 runstep() {
