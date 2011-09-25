@@ -15,7 +15,7 @@ wget http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i686.txt 
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
 stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
-tree_type               sync
+tree_type     snapshot  http://distfiles.gentoo.org/releases/snapshots/current/portage-latest.tar.bz2
 
 # get kernel dotconfig from running kernel
 #cat /proc/config.gz | gzip -d > /dotconfig
@@ -35,3 +35,7 @@ hostname                gentoo
 extra_packages          dhcpcd syslog-ng vim # openssh
 #rcadd                   sshd       default
 #rcadd                   syslog-ng  default
+rcadd network default
+
+echo ifconfig_eth0=\"88.191.122.122 netmask 255.255.255.0 brd 88.191.122.255\" >> /etc/conf.d/network
+echo defaultroute=\"gw 88.191.122.1\" >> /etc/conf.d/network
