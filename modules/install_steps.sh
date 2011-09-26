@@ -484,13 +484,7 @@ run_post_install_script() {
 finishing_cleanup() {
     spawn "cp ${logfile} ${chroot_dir}/root/$(basename ${logfile})" || warn "could not copy install logfile into chroot"
     for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
-        # HACK: patching the fact that we get /mnt/gentoo/boot umounted twice :(
-        #       we just remove the warning in case of /mnt/gentoo/boot
-#        if [ "${mnt}" == "${chroot_dir}/boot"  ]; then
-#            spawn "umount ${mnt}" &>/dev/null
-#        else
-            spawn "umount ${mnt}" || warn "  could not unmount ${mnt}"
-#        fi
+        spawn "umount ${mnt}" || warn "  could not unmount ${mnt}"
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
         spawn "swapoff ${swap}" || warn "  could not deactivate swap on ${swap}"
