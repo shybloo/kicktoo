@@ -1,14 +1,5 @@
 The follow is a list of all the valid configuration options with description and valid parameters.
 ==========================
-dist - Defines your distro
-
-  Usage: 
-    dist <distro>
-
-  Parameters:
-    distro - gentoo, funtoo, exherbo (lower case)
-
-==========================
 part - Creates a partition
 
   Usage:
