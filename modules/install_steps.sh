@@ -212,6 +212,8 @@ unpack_stage_tarball() {
             spawn "unlzma ${chroot_dir}/${tarball}"                         || die "Could not unlzma stage tarball"
             spawn "tar xpf ${chroot_dir}/${tarball%.*} -C ${chroot_dir}"    || die "Could not untar stage tarball"
         fi
+    # ${stage_file} is a dangerous option
+    # it can screw things up if it's too big
     elif [ -n ${stage_file} ] ; then
         spawn "cp ${stage_file} ${chroot_dir}"                              || die "Could not copy stage tarball"
         local stage_name="$(basename ${stage_file})"
@@ -279,7 +281,6 @@ fetch_repo_tree() {
             spawn_chroot "emerge --sync" || die "could not sync portage tree"
         elif [ "${tree_type}" = "snapshot" ]; then
             fetch "${portage_snapshot_uri}" "${chroot_dir}/$(get_filename_from_uri ${portage_snapshot_uri})" || die "could not fetch portage snapshot"
-#           spawn "tar xjf ${chroot_dir}/$(get_filename_from_uri ${portage_snapshot_uri}) -C ${chroot_dir}/usr" || die "could not unpack portage snapshot"
         elif [ "${tree_type}" = "webrsync" ]; then
             spawn_chroot "emerge-webrsync" || die "could not emerge-webrsync"
         elif [ "${tree_type}" = "none" ]; then
