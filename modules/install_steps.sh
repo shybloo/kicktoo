@@ -499,7 +499,7 @@ finishing_cleanup() {
 
 failure_cleanup() {
     spawn "mv ${logfile} ${logfile}.failed" || warn "could not move ${logfile} to ${logfile}.failed"
-    for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r); do
+    for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
         spawn "umount ${mnt}" || warn "  could not unmount ${mnt}.. "
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
