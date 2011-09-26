@@ -483,7 +483,7 @@ run_post_install_script() {
 
 finishing_cleanup() {
     spawn "cp ${logfile} ${chroot_dir}/root/$(basename ${logfile})" || warn "could not copy install logfile into chroot"
-    for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r); do
+    for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
         # HACK: patching the fact that we get /mnt/gentoo/boot umounted twice :(
         #       we just remove the warning in case of /mnt/gentoo/boot
 #        if [ "${mnt}" == "${chroot_dir}/boot"  ]; then
