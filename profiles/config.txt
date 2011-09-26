@@ -250,6 +250,34 @@ kernel_sources - Specifies the kernel sources to use (defaults to
 
   Parameters:
     source - kernel sources to emerge
+=========================================================================
+kernel_binary - Specifies the file to a custom kernel binary
+                If called you should disable all kernel compiling options
+                such as kernel_config_file, kernel_sources, genkernel_opts
+
+  Usage:
+    kernel_binary <path>
+
+  Parameters:
+    path - path to the location of the custom kernel binary
+
+==================================================================
+initramfs_binary - Specifies the file to a custom initramfs binary
+
+  Usage:
+    initramfs_binary <path>
+
+  Parameters:
+    path - path to the location of the custom initramfs binary
+
+==================================================================
+systemmap_binary - Specifies the file to a custom System.map binary
+
+  Usage:
+    systemmap_binary <path>
+
+  Parameters:
+    path - path to the location of the custom System.map binary
 
 ====================================================================================
 bootloader_kernel_args - Specifies extra commandline arguments to pass to the kernel
