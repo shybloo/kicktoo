@@ -17,7 +17,7 @@ latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
 tree_type     snapshot  http://distfiles.gentoo.org/releases/snapshots/current/portage-latest.tar.bz2
 
-#kernel_config_file      $(pwd)/kconfig/dedibox-SC-kernel.config
+#kernel_config_file      $(pwd)/kconfig/dedibox-SC-i686-kernel.config
 #kernel_sources          gentoo-sources
 #genkernel_opts          --loglevel=5
 
@@ -32,8 +32,8 @@ keymap                  fr
 hostname                gentoo
 extra_packages          openssh # dhcpcd syslog-ng vim
 rcadd                   sshd       default
-#rcadd                   syslog-ng  default
 rcadd                   network    default
+#rcadd                   syslog-ng  default
 
 post_install_extra_packages() {
     cat >> ${chroot_dir}/etc/conf.d/network <<EOF
