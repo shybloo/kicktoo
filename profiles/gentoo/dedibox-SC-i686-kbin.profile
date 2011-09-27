@@ -40,3 +40,8 @@ ifconfig_eth0="88.191.122.122 netmask 255.255.255.0 brd 88.191.122.255"
 defaultroute="gw 88.191.122.1"
 EOF
 }
+
+# FIX for unmounting the the second mount of /boot
+post_finishing_cleanup() {
+    umount ${chroot_dir}/boot
+}
