@@ -19,9 +19,9 @@ tree_type     snapshot  http://distfiles.gentoo.org/releases/snapshots/current/p
 #tree_type               sync
 
 # ship the binary kernel instead of compiling (faster)
-kernel_binary           $(pwd)/kbin/kernel-genkernel-amd64-2.6.39-gentoo-r3
-initramfs_binary        $(pwd)/kbin/initramfs-genkernel-amd64-2.6.39-gentoo-r3
-systemmap_binary        $(pwd)/kbin/System.map-genkernel-amd64-2.6.39-gentoo-r3
+kernel_binary           $(pwd)/kbin/kernel-genkernel-x86_64-2.6.39-gentoo-r3
+initramfs_binary        $(pwd)/kbin/initramfs-genkernel-x86_64-2.6.39-gentoo-r3
+systemmap_binary        $(pwd)/kbin/System.map-genkernel-x86_64-2.6.39-gentoo-r3
 
 timezone                UTC
 rootpw                  a
