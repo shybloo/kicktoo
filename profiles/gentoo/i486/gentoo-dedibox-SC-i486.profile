@@ -19,7 +19,7 @@ tree_type     snapshot  http://distfiles.gentoo.org/releases/snapshots/current/p
 #tree_type               sync
 
 # compile kernel from sources using the right .config
-kernel_config_file      $(pwd)/kconfig/dedibox-SC-i686-kernel.config
+kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
 kernel_sources          gentoo-sources
 genkernel_opts          --loglevel=5
 
