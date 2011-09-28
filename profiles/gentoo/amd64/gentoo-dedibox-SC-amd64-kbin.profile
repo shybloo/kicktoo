@@ -15,7 +15,7 @@ wget -q http://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd6
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
 stage_uri               http://distfiles.gentoo.org/releases/amd64/autobuilds/${latest_stage_version}
-tree_type     snapshot  http://distfiles.gentoo.org/releases/snapshots/current/portage-latest.tar.bz2
+tree_type     snapshot  http://distfiles.gentoo.org/snapshots/current/portage-latest.tar.bz2
 #tree_type               sync
 
 # ship the binary kernel instead of compiling (faster)
@@ -36,7 +36,7 @@ rcadd                   network    default
 # MUST HAVE
 post_install_extra_packages() {
     cat >> ${chroot_dir}/etc/conf.d/network <<EOF
-ifconfig_eth0="88.191.122.122 netmask 255.255.255.0 brd 88.191.122.255"
-defaultroute="gw 88.191.122.1"
+ifconfig_eth0="88.xxx.xxx.xxx netmask 255.255.255.0 brd 88.xxx.xxx.255"
+defaultroute="gw 88.xxx.xxx.1"
 EOF
 }

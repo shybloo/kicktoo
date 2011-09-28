@@ -11,11 +11,11 @@ mountfs /dev/sda1        ext2 /boot
 mountfs /dev/mapper/root ext4 / noatime
 
 # retrieve latest autobuild stage version for stage_uri
-wget ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/latest-stage3-i686.txt -O /tmp/stage3.version
+wget -q http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i686.txt -O /tmp/stage3.version
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
-stage_uri               ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/${latest_stage_version}
-tree_type               snapshot ftp://mirrors.kernel.org/gentoo/snapshots/portage-latest.tar.bz2
+stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
+tree_type   snapshot    http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2
 
 # get kernel dotconfig from running kernel
 cat /proc/config.gz | gzip -d > /dotconfig
@@ -33,6 +33,3 @@ hostname                gentoo-luks
 #rcadd                  sshd default
 #rcadd                  syslog-ng default
 #rcadd                  vixie-cron default
-
-# get kernel dotconfig from running kernel
-cat /proc/config.gz | gzip -d > /dotconfig

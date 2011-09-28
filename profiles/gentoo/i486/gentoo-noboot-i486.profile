@@ -12,7 +12,7 @@ wget -q http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i486.t
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
 stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
-tree_type    snapshot   http://distfiles.gentoo.org/releases/snapshots/portage-latest.tar.bz2
+tree_type    snapshot   http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2
 
 # get kernel dotconfig from running kernel
 cat /proc/config.gz | gzip -d > /dotconfig
