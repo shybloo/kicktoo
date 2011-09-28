@@ -30,7 +30,7 @@ mountfs /dev/vg/var  ext4 /var  noatime
 mountfs /dev/vg/tmp  ext4 /tmp  noatime
 
 # retrieve latest autobuild stage version for stage_uri
-wget http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i486.txt -O /tmp/stage3.version
+wget -q http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i486.txt -O /tmp/stage3.version
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
 stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
