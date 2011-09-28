@@ -317,9 +317,15 @@ install_cryptsetup() {
 
 copy_kernel() {
     spawn_chroot "mount /boot"
-    cp "${kernel_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
-    cp "${initramfs_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
-    cp "${systemmap_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
+    if [ -f "${kernel_binary}" ]; then
+        cp "${kernel_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
+    fi
+    if [ -f "${initramfs_binary}" ]; then
+        cp "${initramfs_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
+    fi
+    if [ -f "${systemmap_binary}" ]; then
+        cp "${systemmap_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
+    fi
 }
 
 build_kernel() {
