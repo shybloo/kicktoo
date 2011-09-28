@@ -317,15 +317,10 @@ install_cryptsetup() {
 
 copy_kernel() {
     spawn_chroot "mount /boot"
-    if [ -f "${kernel_binary}" ]; then
-        cp "${kernel_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
-    fi
-    if [ -f "${initramfs_binary}" ]; then
-        cp "${initramfs_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
-    fi
-    if [ -f "${systemmap_binary}" ]; then
-        cp "${systemmap_binary}" "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
-    fi
+    # NOTE let cp fail if files are not there
+    cp "${kernel_binary}"       "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
+    cp "${initramfs_binary}"    "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
+    cp "${systemmap_binary}"    "${chroot_dir}/boot" || die "could not copy precompiled kernel to ${chroot_dir}/boot"
 }
 
 build_kernel() {
@@ -365,8 +360,8 @@ build_kernel() {
 setup_network_post() {
     if [ -n "${net_devices}" ]; then
         for net_device in ${net_devices}; do
-            local device="$(echo ${net_device} | cut -d '|' -f1)"
-            local ipdhcp="$(echo ${net_device} | cut -d '|' -f2)"
+            local device="$(echo ${net_device}  | cut -d '|' -f1)"
+            local ipdhcp="$(echo ${net_device}  | cut -d '|' -f2)"
             local gateway="$(echo ${net_device} | cut -d '|' -f3)"
             if [ "${ipdhcp}" = "dhcp" ] || [ "${ipdhcp}" = "DHCP" ]; then
                 echo "config_${device}=( \"dhcp\" )" >> ${chroot_dir}/etc/conf.d/net
@@ -383,9 +378,9 @@ setup_network_post() {
 
 setup_root_password() {
     if [ -n "${root_password_hash}" ]; then
-        spawn_chroot "echo 'root:${root_password_hash}' | chpasswd -e" || die "could not set root password"
+        spawn_chroot "echo 'root:${root_password_hash}' | chpasswd -e"  || die "could not set root password"
     elif [ -n "${root_password}" ]; then
-        spawn_chroot "echo 'root:${root_password}' | chpasswd" || die "could not set root password"
+        spawn_chroot "echo 'root:${root_password}'      | chpasswd"     || die "could not set root password"
     fi
 }
 
