@@ -261,8 +261,8 @@ fi
 runstep run_post_install_script     "Running post-install script if any"
 runstep finishing_cleanup           "Cleaning up"
 
-# FIXME take care of umounting a second time ${chroot_dir}/boot
-# $(mount) does not show it but $(cat /proc/mounts) does, WTF?!
+# FIXME this takes care of umounting a second time ${chroot_dir}/boot
+#       $(mount) does not show it but $(cat /proc/mounts) does, WTF?!
 if [ -n "$(cat /proc/mounts | grep ${chroot_dir}/boot)" ]; then
     umount ${chroot_dir}/boot
 fi
