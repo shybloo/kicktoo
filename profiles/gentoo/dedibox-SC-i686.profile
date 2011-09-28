@@ -42,3 +42,8 @@ defaultroute="gw 88.191.122.1"
 EOF
 }
 
+# FIX for unmounting the the second mount of /boot
+post_finishing_cleanup() {
+    umount ${chroot_dir}/boot
+}
+
