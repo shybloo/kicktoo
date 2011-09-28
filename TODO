@@ -33,5 +33,5 @@ DONE   - 1 kernel for normal install
 [X] - gentoo-noboot-i686.profile
 [X] - gentoo-dedibox-SC-i686-kbin.profile
 [X] - gentoo-dedibox-SC-i686.profile
-[ ] - gentoo-dedibox-SC-i486-kbin.profile
-[ ] - gentoo-dedibox-SC-i486.profile
+[X] - gentoo-dedibox-SC-i486-kbin.profile
+[X] - gentoo-dedibox-SC-i486.profile
