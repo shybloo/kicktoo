@@ -34,7 +34,7 @@ wget ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/latest-stage3-i686.
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
 stage_uri               ftp://mirrors.kernel.org/gentoo/releases/x86/autobuilds/${latest_stage_version}
-tree_type               snapshot ftp://mirrors.kernel.org/gentoo/snapshots/portage-latest.tar.xz
+tree_type               snapshot ftp://mirrors.kernel.org/gentoo/snapshots/portage-latest.tar.bz2
 
 # get kernel dotconfig from running kernel
 cat /proc/config.gz | gzip -d > /dotconfig
