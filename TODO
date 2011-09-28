@@ -1,63 +1,18 @@
-===========
-=WISH LIST=
-===========
-     - add cleanup for luks devices too
-     - remove tftp support
-DONE - detect if cryptsetup is there in case of --luks
-DONE - detect if unxz is there in case of installing exherbo
-DONE - --luks genkernel support for unstable: ~gentoo, funtoo (need baselayout-2)
-DONE |- profile parsing
-DONE |- cryptsetup calls
-DONE - dist=funtoo install support
-DONE |- profile parsing
-DONE |- git checkout call
-DONE  |- move all code to profile side (see doc/~funtoo.profile)
-DONE - Extend kicktoo-rescue to non luks users
-DONE |- autodetect cryptsetup or clear device 
-DONE |- mount $1
-     - create kernel with initramfs for exherbo (patch genkernel or rewrite?) => just rewrite within profile
-DONE - dist=exherbo install support
-DONE |- profile parsing
-DONE |- exheres sync repo support 
-DONE |- install_portage_tree to install_repo_tree w/ exheres support
-DONE  |- move all code to profile side (see doc/exherbo.profile)
-DONE - revert all gentoo/funtoo/exherbo specific logic from inner code to template side
-     - always keep code generic, never include distro specific logic inside kicktoo: use profiles
-DONE - provide new default gentoo/funtoo/exherbo installation profiles
-DONE - add lzma stage tarball support
-DONE - add bzip2 stage tarball support 
-DONE - add gzip stage tarball supprt 
-DONE - add xz stage tarball support
+-------------
+= Wish List =
+-------------
+
      - add LiLo boot support (default will always stay Grub)
      - add swap partition as extended by default instead of primary (this would allow gentoo-lvm.profile and another system to dual boot)
      - add some work about the new kernel 'make localmodconfig' from 2.6.32
-DROP - exherbo: add eclectic rc boot config support for exherbo (rcadd option) => rewrite within profile
      - add 'precompiled' options to $kernel_sources and provide a binary kernel instead of sources (gain time)
 DONE   - 1 kernel for normal install
        - 1 kernel for luks install
        - 1 kernel for lvm install
 
-========
-=FIXMES=
-========
-DONE - gentoo/funtoo: parsing bug timezone & hostname & keymap functions don't work with unstable ~gentoo and ~funtoo
-DONE  |- reason: variables lowercase w/ baselayout-2 as uppercase w/ baselayout-1
-DONE - sanity-check-config: dist=exherbo and tree_type=sync restricted
-DONE - sanity-check-config: dist=funtoo  and tree_type=snapshot restricted
-DONE - sanity-check-config: dist=exherbo and tree_type=sync restricted
-     - sanitize sanity-check-config (for use with -s option): does half what it should
-DONE - rc-update added by default after service build: should let user choose in profile
-DONE  - loggind_daemon
-DONE  - cron daemon
-DONE - exherbo: need detect_baselayout2() because of unstable stage3 (gentoo, funtoo)
-DONE - exherbo: need detect_grub2() because of config breakage (modules/misc.sh) BUGGY!!
-DONE - rescue: need checking for cryptsetup device for modules/rescue.sh
-DONE - exherbo: support for /dev/pts (critical) => reverse change and add -o rbind to /dev instead of bind.
-DONE - gentoo/funtoo: chpasswd invalid option resolved on 0.2.4 using -pam and rebuilding shadow (see doc/~funtoo*profile patch inside)
-
-==========
-=PROFILES=
-==========
+-------------------
+= Tested Profiles =
+-------------------
 
 ---- Gentoo stages (stable)
 [ ] - gentoo-amd64.profile
@@ -75,84 +30,7 @@ DONE - gentoo/funtoo: chpasswd invalid option resolved on 0.2.4 using -pam and r
 [ ] - gentoo-noboot-amd64.profile
 [X] - gentoo-noboot-i486.profile
 [X] - gentoo-noboot-i686.profile
-
----- Funtoo stages (stable)
-[ ] - funtoo-amd64.profile
-[ ] - funtoo-core2.profile
-[ ] - funtoo-opteron.profile
-[ ] - funtoo-x86.profile
-[ ] - funtoo-i686.profile
-[ ] - funtoo-luks-amd64.profile
-[ ] - funtoo-luks-core2.profile
-[ ] - funtoo-luks-opteron.profile
-[ ] - funtoo-luks-x86.profile
-[ ] - funtoo-luks-i686.profile
-[ ] - funtoo-luks-noswap-amd64.profile
-[ ] - funtoo-luks-noswap-core2.profile
-[ ] - funtoo-luks-noswap-opteron.profile
-[ ] - funtoo-luks-noswap-x68.profile
-[ ] - funtoo-luks-noswap-i686.profile
-[ ] - funtoo-lvm-amd64.profile
-[ ] - funtoo-lvm-core2.profile
-[ ] - funtoo-lvm-opteron.profile
-[ ] - funtoo-lvm-x86.profile
-[ ] - funtoo-lvm-i686.profile
-[ ] - funtoo-noboot-amd64.profile
-[ ] - funtoo-noboot-core2.profile
-[ ] - funtoo-noboot-opteron.profile
-[ ] - funtoo-noboot-x86.profile
-[ ] - funtoo-noboot-i686.profile
-
----- Funtoo stages (unstable)
-[ ] - ~funtoo-amd64.profile
-[ ] - ~funtoo-athlon-xp.profile
-[ ] - ~funtoo-core2.profile
-[ ] - ~funtoo-core2_32.profile
-[ ] - ~funtoo-opteron.profile
-[ ] - ~funtoo-opteron_32.profile
-[ ] - ~funtoo-x86.profile
-[ ] - ~funtoo-i686.profile
-[ ] - ~funtoo-luks-amd64.profile
-[ ] - ~funtoo-luks-athlon-xp.profile
-[ ] - ~funtoo-luks-core2.profile
-[ ] - ~funtoo-luks-core2_32.profile
-[ ] - ~funtoo-luks-opteron.profile
-[ ] - ~funtoo-luks-opteron_32.profile
-[ ] - ~funtoo-luks-x86.profile
-[ ] - ~funtoo-luks-i686.profile
-[ ] - ~funtoo-luks-noswap-amd64.profile
-[ ] - ~funtoo-luks-noswap-athlon-xp.profile
-[ ] - ~funtoo-luks-noswap-core2.profile
-[ ] - ~funtoo-luks-noswap-core2_32.profile
-[ ] - ~funtoo-luks-noswap-opteron.profile
-[ ] - ~funtoo-luks-noswap-opteron_32.profile
-[ ] - ~funtoo-luks-noswap-x68.profile
-[ ] - ~funtoo-luks-noswap-i686.profile
-[ ] - ~funtoo-lvm-amd64.profile
-[ ] - ~funtoo-lvm-athlon-xp.profile
-[ ] - ~funtoo-lvm-core2.profile
-[ ] - ~funtoo-lvm-core2_32.profile
-[ ] - ~funtoo-lvm-opteron.profile
-[ ] - ~funtoo-lvm-opteron_32.profile
-[ ] - ~funtoo-lvm-x86.profile
-[ ] - ~funtoo-lvm-i686.profile
-[ ] - ~funtoo-noboot-amd64.profile
-[ ] - ~funtoo-noboot-athlon-xp.profile
-[ ] - ~funtoo-noboot-core2.profile
-[ ] - ~funtoo-noboot-core2_32.profile
-[ ] - ~funtoo-noboot-opteron.profile
-[ ] - ~funtoo-noboot-opteron_32.profile
-[ ] - ~funtoo-noboot-x86.profile
-[ ] - ~funtoo-noboot-i686.profile
-
----- Exherbo stages (stable)
-[ ] - exherbo-amd64.profile
-[ ] - exherbo-x86.profile
-[ ] - exherbo-luks-amd64.profile
-[ ] - exherbo-luks-x86.profile
-[ ] - exherbo-luks-noswap-amd64.profile
-[ ] - exherbo-luks-noswap-x86.profile
-[ ] - exherbo-lvm-amd64.profile
-[ ] - exherbo-lvm-x86.profile
-[ ] - exherbo-noboot-amd64.profile
-[ ] - exherbo-noboot-x86.profile
+[X] - gentoo-dedibox-SC-i686-kbin.profile
+[X] - gentoo-dedibox-SC-i686.profile
+[ ] - gentoo-dedibox-SC-i486-kbin.profile
+[ ] - gentoo-dedibox-SC-i486.profile
