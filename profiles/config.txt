@@ -1,4 +1,6 @@
-The follow is a list of all the valid configuration options with description and valid parameters.
+The following is a list of all the valid configuration options with description and valid parameters.
+
+
 ==========================
 part - Creates a partition
 
@@ -15,7 +17,7 @@ part - Creates a partition
             specified), leave blank for "extended"
 
 ================================
-mdraid - Creates a md raid array
+mdraid - Creates an md raid array
 
   Usage:
     mdraid <array> <arrayopts>
@@ -26,7 +28,7 @@ mdraid - Creates a md raid array
                 '-l 1 -n 2 /dev/sda2 /dev/sdb2'
 
 =========================================
-lvm_volgroup - Creates a LVM volume group
+lvm_volgroup - Creates an LVM volume group
 
   Usage:
     lvm_volgroup <name> <devices>
@@ -36,7 +38,7 @@ lvm_volgroup - Creates a LVM volume group
     devices - list of block devices to include in the volume group
 
 ========================================
-lvm_logvol - Create a LVM logical volume
+lvm_logvol - Create an LVM logical volume
 
   Usage:
     lvm_logvol <volgroup> <size> <name>
