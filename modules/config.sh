@@ -207,6 +207,12 @@ genkernel_opts() {
     genkernel_opts="${opts}"
 }
 
+kigen_opts() {
+    local opts=$@
+
+    kigen_opts="${opts}"
+}
+
 kernel_binary() {
     do_kbin=yes
     local path=$1

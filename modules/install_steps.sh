@@ -341,22 +341,6 @@ build_kernel() {
     fi
 }
 
-#install_logging_daemon() {
-#   if [ "${logging_daemon}" = "none" ]; then
-#       debug install_logging_daemon "logging_daemon is 'none'...skipping"
-#   else
-#       spawn_chroot "emerge ${logging_daemon}" || die "could not emerge logging daemon"
-#   fi
-#}
-#
-#install_cron_daemon() {
-#   if [ "${cron_daemon}" = "none" ]; then
-#       debug install_cron_daemon "cron_daemon is 'none'...skipping"
-#   else
-#       spawn_chroot "emerge ${cron_daemon}" || die "could not emerge cron daemon"
-#   fi
-#}
-
 setup_network_post() {
     if [ -n "${net_devices}" ]; then
         for net_device in ${net_devices}; do

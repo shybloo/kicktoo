@@ -214,6 +214,15 @@ genkernel_opts - Specifies extra options to pass to genkernel
   Parameters:
     opts - the extra options to pass to genkernel
 
+=====================================================
+kigen_opts - Specifies extra options to pass to KIGen
+
+  Usage:
+    kigen_opts <opts>
+
+  Parameters:
+    opts - the extra options to pass to KIGen
+
 ===============================================================
 kernel_config_uri - Specifies the URI to a custom kernel config
 
