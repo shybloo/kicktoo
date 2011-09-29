@@ -234,6 +234,16 @@ systemmap_binary() {
     systemmap_binary="${path}"
 }
 
+kernel_builder() {
+    local kb=$1
+
+    if [ -z "${kb}" ]; then
+        kigen_builder="genkernel"
+    else
+        kigen_builder="${kb}"
+    fi
+}
+
 kernel_config_uri() {
     do_kernel=yes
     local uri=$1

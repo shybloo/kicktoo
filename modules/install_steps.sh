@@ -328,7 +328,7 @@ build_kernel() {
         debug build_kernel "kernel_sources is 'none'...skipping kernel build"
     else
         spawn_chroot "emerge ${kernel_sources}" || die "could not emerge kernel sources"
-        spawn_chroot "emerge genkernel" || die "could not emerge genkernel"
+        spawn_chroot "emerge ${kernel_builder}" || die "could not emerge ${kernel_builder}"
         if [ -n "${kernel_config_uri}" ]; then
             fetch "${kernel_config_uri}" "${chroot_dir}/tmp/kconfig" || die "could not fetch kernel config"
             spawn_chroot "genkernel --kernel-config=/tmp/kconfig ${genkernel_opts} all" || die "could not build custom kernel"

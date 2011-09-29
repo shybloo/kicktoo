@@ -24,10 +24,11 @@ tree_type   snapshot    http://distfiles.gentoo.org/snapshots/portage-latest.tar
 # get kernel dotconfig from running kernel
 #cat /proc/config.gz | gzip -d > /dotconfig
 
+kernel_sources          gentoo-sources
+kernel_builder          kigen
 #kernel_config_file      /dotconfig
 kernel_config_file      $(pwd)/kconfig/dedibox-SC-luks-x86-kernel.config
-genkernel_opts          --luks --loglevel=5 # required
-kernel_sources          gentoo-sources
+kigen_opts              --source-luks # required
 
 timezone                UTC
 rootpw                  a

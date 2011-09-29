@@ -252,6 +252,20 @@ kernel_sources - Specifies the kernel sources to use (defaults to
 
   Parameters:
     source - kernel sources to emerge
+    
+============================================================================
+kernel_builder - Specifies the program to build the kernel and the initramfs
+                 values can either be genkernel OR KIGen (my own genkernel 
+                 clone in python)
+
+  Usage:
+    kernel_builder <app>
+
+  Parameters:
+    genkernel - use genkernel to build the kernel and its initramfs
+    kigen     - use KIGen to build the kernel and its initramfs (this is
+                required for LUKS enabled systems and genkernel won't work)
+
 =========================================================================
 kernel_binary - Specifies the file to a custom kernel binary
                 If called you should disable all kernel compiling options
