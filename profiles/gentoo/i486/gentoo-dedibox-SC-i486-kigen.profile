@@ -22,7 +22,7 @@ tree_type     snapshot  http://distfiles.gentoo.org/snapshots/portage-latest.tar
 kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
 kernel_sources          gentoo-sources
 kernel_builder          kigen
-kigen_kernel_opts       --nocolor --silentoldconfig
+kigen_kernel_opts       --nocolor --localyesconfig
 kigen_initramfs_opts    --nocolor
 
 timezone                UTC
