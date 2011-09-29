@@ -35,8 +35,10 @@ bootloader              grub
 bootloader_kernel_args  crypt_root=/dev/sda3 # should match root device in the $luks variable
 keymap                  us # fr be-latin1
 hostname                gentoo-luks
-#extra_packages          openssh syslog-ng
-#rcadd                   sshd default
+extra_packages          openssh # syslog-ng
+
+rcadd                   network default
+rcadd                   sshd default
 #rcadd                   syslog-ng default
 #rcadd                   vixie-cron default
 
@@ -50,5 +52,12 @@ EOF
     # this will activate the encrypted swap on boot
     cat >> ${chroot_dir}/etc/conf.d/local <<EOF
 swapon /dev/sda2
+EOF
+}
+
+post_install_extra_packages() {
+    cat >> ${chroot_dir}/etc/conf.d/network <<EOF
+ifconfig_eth0="88.xxx.xxx.xxx netmask 255.255.255.0 brd 88.xxx.xxx.255"
+defaultroute="gw 88.xxx.xxx.1"
 EOF
 }
