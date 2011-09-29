@@ -47,5 +47,5 @@ pre_build_kernel() {
     spawn_chroot "echo PORTDIR_OVERLAY=\"/usr/local/portage\" >> /etc/make.conf" 
     spawn_chroot "mkdir -p /usr/local/portage/sys-kernel/kigen"
     spawn_chroot "wget -q https://github.com/downloads/r1k0/kigen/kigen-0.4.2.ebuild -O /usr/local/portage/sys-kernel/kigen/kigen-0.4.2.ebuild"
-    spawn_chroot "ebuild digest /usr/local/portage/sys-kernel/kigen/kigen-0.4.2.ebuild"
+    spawn_chroot "ebuild /usr/local/portage/sys-kernel/kigen/kigen-0.4.2.ebuild digest"
 }
