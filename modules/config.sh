@@ -234,14 +234,12 @@ systemmap_binary() {
     systemmap_binary="${path}"
 }
 
+# defaults to genkernel
+kernel_builder="genkernel"
 kernel_builder() {
     local kb=$1
 
-    if [ -z "${kb}" ]; then
-        kernel_builder="genkernel"
-    else
-        kernel_builder="${kb}"
-    fi
+    kernel_builder="${kb}"
 }
 
 kernel_config_uri() {
