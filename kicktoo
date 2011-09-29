@@ -43,7 +43,7 @@ has() {
 }
 
 # check for required programs on livecd
-for a in bash fdisk grep shred egrep mount swapoff swapon mke2fs wget chroot tar whoami hostname # cryptsetup unxz dialog
+for a in bash curl fdisk grep shred egrep mount swapoff swapon mke2fs wget chroot tar whoami hostname # cryptsetup unxz dialog
 do
     has "${a}"
 done

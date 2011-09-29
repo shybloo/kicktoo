@@ -63,10 +63,10 @@ fetch_tftp() {
     local uri=$1
     local localfile=$2
     
-    uri=$(echo "${uri}" | sed -e 's|^tftp://||')
-    host=$(echo "${uri}" | cut -d / -f 1)
-    path=$(echo "${uri}" | cut -d / -f 2-)
-    tftp -g -r "${path}" -l "${localfile}" "${host}" || die "could not fetch ${uri}"
+    spawn "curl ${uri} -o ${localfile}"
+    local curl_exitcode=$?
+    debug fetch_tftp "exit code from curl was ${curl_exitcode}"
+    return ${curl_exitcode}
 }
 
 fetch() {
