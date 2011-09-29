@@ -238,9 +238,9 @@ kernel_builder() {
     local kb=$1
 
     if [ -z "${kb}" ]; then
-        kigen_builder="genkernel"
+        kernel_builder="genkernel"
     else
-        kigen_builder="${kb}"
+        kernel_builder="${kb}"
     fi
 }
 
