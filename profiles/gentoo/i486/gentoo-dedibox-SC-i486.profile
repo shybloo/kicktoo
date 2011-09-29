@@ -21,6 +21,7 @@ tree_type     snapshot  http://distfiles.gentoo.org/snapshots/portage-latest.tar
 # compile kernel from sources using the right .config
 kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
 kernel_sources          gentoo-sources
+kernel_builder          genkernel
 genkernel_opts          --loglevel=5
 
 timezone                UTC

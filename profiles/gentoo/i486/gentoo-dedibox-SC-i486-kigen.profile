@@ -21,7 +21,8 @@ tree_type     snapshot  http://distfiles.gentoo.org/snapshots/portage-latest.tar
 # compile kernel from sources using the right .config
 kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
 kernel_sources          gentoo-sources
-genkernel_opts          --loglevel=5
+kernel_builder          kigen
+kigen_opts              
 
 timezone                UTC
 rootpw                  a
@@ -43,5 +44,8 @@ EOF
 }
 
 pre_build_kernel() {
-    
+    spawn_chroot "echo PORTDIR_OVERLAY=\"/usr/local/portage\" >> /etc/make.conf" 
+    spawn_chroot "mkdir -p /usr/local/portage/sys-kernel/kigen"
+    spawn_chroot "wget -q https://github.com/downloads/r1k0/kigen/kigen-0.4.2.ebuild -O /usr/local/portage/sys-kernel/kigen"
+    spawn_chroot "ebuild digest /usr/local/portage/sys-kernel/kigen/kigen-0.4.2.ebuild"
 }
