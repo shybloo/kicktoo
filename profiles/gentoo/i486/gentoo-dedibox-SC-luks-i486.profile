@@ -28,7 +28,8 @@ kernel_sources          gentoo-sources
 kernel_builder          kigen
 #kernel_config_file      /dotconfig
 kernel_config_file      $(pwd)/kconfig/dedibox-SC-luks-x86-kernel.config
-kigen_opts              --source-luks # required
+kigen_kernel_opts
+kigen_initramfs_opts    --source-luks # required
 
 timezone                UTC
 rootpw                  a

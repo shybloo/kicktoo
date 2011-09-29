@@ -22,7 +22,8 @@ tree_type     snapshot  http://distfiles.gentoo.org/snapshots/portage-latest.tar
 kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
 kernel_sources          gentoo-sources
 kernel_builder          kigen
-kigen_opts              
+kigen_kernel_opts              
+kigen_initramfs_opts
 
 timezone                UTC
 rootpw                  a

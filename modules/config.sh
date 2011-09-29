@@ -207,10 +207,16 @@ genkernel_opts() {
     genkernel_opts="${opts}"
 }
 
-kigen_opts() {
+kigen_kernel_opts() {
     local opts=$@
 
-    kigen_opts="${opts}"
+    kigen_kernel_opts="${opts}"
+}
+
+kigen_initramfs_opts() {
+    local opts=$@
+
+    kigen_initramfs_opts="${opts}"
 }
 
 kernel_binary() {
