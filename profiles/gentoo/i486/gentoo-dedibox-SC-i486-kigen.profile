@@ -22,7 +22,7 @@ tree_type     snapshot  http://distfiles.gentoo.org/snapshots/portage-latest.tar
 kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
 kernel_sources          gentoo-sources
 kernel_builder          kigen
-kigen_kernel_opts       --nocolor --localyesconfig
+kigen_kernel_opts       --nocolor --yesoldconfig
 kigen_initramfs_opts    --nocolor
 
 timezone                UTC
@@ -45,10 +45,11 @@ EOF
 }
 
 pre_build_kernel() {
-    spawn_chroot "echo PORTDIR_OVERLAY=\"/usr/local/portage\" >> /etc/make.conf" 
+    spawn_chroot "emerge dev-vcs/git"
+    spawn_chroot "echo PORTDIR_OVERLAY=\"/usr/local/portage\" >> /etc/make.conf"
     spawn_chroot "mkdir -p /usr/local/portage/sys-kernel/kigen"
-    spawn_chroot "wget -q https://github.com/downloads/r1k0/kigen/kigen-0.4.2.ebuild -O /usr/local/portage/sys-kernel/kigen/kigen-0.4.2.ebuild"
-    spawn_chroot "ebuild /usr/local/portage/sys-kernel/kigen/kigen-0.4.2.ebuild digest"
+    spawn_chroot "wget -q https://github.com/downloads/r1k0/kigen/kigen-9999.ebuild -O /usr/local/portage/sys-kernel/kigen/kigen-9999.ebuild"
+    spawn_chroot "ebuild /usr/local/portage/sys-kernel/kigen/kigen-9999.ebuild digest"
     spawn_chroot "mkdir -p /etc/portage"
-    spawn_chroot "echo \>=sys-kernel/kigen-0.4.2 ~x86 >> /etc/portage/package.accept_keywords"
+    spawn_chroot "echo \>=sys-kernel/kigen-9999 ~x86 >> /etc/portage/package.accept_keywords"
 }
