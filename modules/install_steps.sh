@@ -502,4 +502,11 @@ failure_cleanup() {
     for array in $(set | grep '^mdraid_' | cut -d= -f1 | sed -e 's:^mdraid_::' | sort); do
         spawn "mdadm --manage --stop /dev/${array}" || die "could not stop mdraid array ${array}"
     done
+    #####################################################################
+    # FIXME this takes care of umounting a second time ${chroot_dir}/boot
+    #       $(mount) does not show it but $(cat /proc/mounts) does, WTF?!
+    if [ -n "$(cat /proc/mounts | grep ${chroot_dir}/boot)" ]; then     #
+        umount ${chroot_dir}/boot                                       #
+    fi                                                                  #
+    #####################################################################
 }
