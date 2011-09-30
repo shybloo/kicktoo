@@ -9,7 +9,7 @@ spawn() {
     if [ ${verbose} = 1 ]; then
         (eval "${cmd}" 2>&1; echo $? > /tmp/spawn_exitcode) | tee -a ${output_logfile} ${output_logfile}.cur
     else
-    (eval "${cmd}" 2>&1; echo $? > /tmp/spawn_exitcode) | tee -a ${output_logfile} ${output_logfile}.cur >/dev/null 2>&1
+        (eval "${cmd}" 2>&1; echo $? > /tmp/spawn_exitcode) | tee -a ${output_logfile} ${output_logfile}.cur >/dev/null 2>&1
     fi
     spawn_exitcode=$(</tmp/spawn_exitcode)
     rm /tmp/spawn_exitcode

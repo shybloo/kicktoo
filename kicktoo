@@ -52,7 +52,8 @@ import() {
     module=$1
     if source modules/${module}.sh &>/dev/null ; then
         true
-    elif source /usr/lib/kicktoo-${VERSION}/modules/${module}.sh ; then
+#    elif source /usr/lib/kicktoo-${VERSION}/modules/${module}.sh ; then
+    elif source /usr/share/kicktoo/modules/${module}.sh ; then
         true
     else
         echo "critical error - cannot load modules - exiting!" ; exit 1
