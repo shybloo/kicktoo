@@ -15,7 +15,7 @@ wget -q http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i686.t
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
 stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
-tree_type     snapshot  http://distfiles.gentoo.org/snapshots/current/portage-latest.tar.bz2
+tree_type     snapshot  http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2
 #tree_type               sync
 
 # ship the binary kernel instead of compiling (faster)
