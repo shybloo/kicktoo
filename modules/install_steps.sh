@@ -311,8 +311,10 @@ unpack_repo_tree() {
 }
 
 install_cryptsetup() {
-#    spawn_chroot "emerge cryptsetup" || die "could not emerge cryptsetup"
-    run_emerge cryptsetup || die "could not emerge cryptsetup"
+    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
+    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
+    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
+#    run_emerge cryptsetup || die "could not emerge cryptsetup"
 }
 
 copy_kernel() {
