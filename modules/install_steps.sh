@@ -387,6 +387,7 @@ setup_root_password() {
 setup_timezone() {
     if detect_baselayout2 ; then
         spawn_chroot "echo \"clock=\"${timezone}\" > /etc/conf.d/hwclock\"" || die "could not adjust clock config in /etc/conf.d/hwclock"
+        spawn_chroot "echo \"${timezone} > /etc/timezone\"" || die "could not set timezone in /etc/timezone"
     else
         if [ -e "${chroot_dir}/etc/localtime" ] ; then
             spawn "rm ${chroot_dir}/etc/localtime 2>/dev/null"
