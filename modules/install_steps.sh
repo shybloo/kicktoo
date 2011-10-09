@@ -492,6 +492,9 @@ finishing_cleanup() {
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
         spawn "swapoff ${swap}" || warn "  could not deactivate swap on ${swap}"
     done
+    for luksdev in $(ls /dev/mapper | grep -v control); do
+        spawn "cryptsetup remove ${luksdev}" || warn "could not remove luks device /dev/mapper/${luksdev}"
+    done
 }
 
 failure_cleanup() {
@@ -504,6 +507,9 @@ failure_cleanup() {
     done
     for array in $(set | grep '^mdraid_' | cut -d= -f1 | sed -e 's:^mdraid_::' | sort); do
         spawn "mdadm --manage --stop /dev/${array}" || die "could not stop mdraid array ${array}"
+    done
+    for luksdev in $(ls /dev/mapper | grep -v control); do
+        spawn "cryptsetup remove ${luksdev}" || die "could not remove luks device /dev/mapper/${luksdev}"
     done
     #####################################################################
     # FIXME this takes care of umounting a second time ${chroot_dir}/boot
