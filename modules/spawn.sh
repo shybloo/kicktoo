@@ -12,7 +12,7 @@ spawn() {
         (eval "${cmd}" 2>&1; echo $? > /tmp/spawn_exitcode) | tee -a ${output_logfile} ${output_logfile}.cur >/dev/null 2>&1
     fi
     spawn_exitcode=$(</tmp/spawn_exitcode)
-    rm /tmp/spawn_exitcode
+    rm /tmp/spawn_exitcode &>/dev/null
 
     return ${spawn_exitcode}
 }
