@@ -2,21 +2,14 @@ isafunc() {
     local func=$1
 
     declare -f ${func} > /dev/null
-
     return $?
-
-#    if [ -n "$(type ${func} 2>/dev/null | grep "function")" ]; then
-#        return 0
-#    else
-#        return 1
-#    fi
 }
 
 runstep() {
     local func=$1
     local descr=$2
-
     local skipfunc=$(eval $(echo echo "\${skip_${func}}"))
+
     if [ "${skipfunc}" != "1" ]; then
         if [ -n "${server}" ]; then
             server_send_request "update_status" "func=${func}&descr=$(echo "${descr}" | sed -e 's: :+:g')"
