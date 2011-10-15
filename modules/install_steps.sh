@@ -2,10 +2,10 @@ run_pre_install_script() {
     if [ -n "${pre_install_script_uri}" ]; then
         fetch "${pre_install_script_uri}" "${chroot_dir}/var/tmp/pre_install_script" || die "could not fetch pre-install script"
         chmod +x "${chroot_dir}/var/tmp/pre_install_script"
-        spawn_chroot "/var/tmp/pre_install_script" || die "error running pre-install script"
+        spawn_chroot "/var/tmp/pre_install_script"                                   || die "error running pre-install script"
         spawn "rm ${chroot_dir}/var/tmp/pre_install_script"
     elif $(isafunc pre_install); then
-        pre_install || die "error running pre_install()"
+        pre_install                                                                  || die "error running pre_install()"
     else
         debug run_pre_install_script "no pre-install script set"
     fi
@@ -44,7 +44,7 @@ setup_mdraid() {
         local arrayopts=$(eval echo \${${array_temp}})
         local arraynum=$(echo ${array} | sed -e 's:^md::')
         if [ ! -e "/dev/md${arraynum}" ]; then
-            spawn "mknod /dev/md${arraynum} b 9 ${arraynum}" || die "could not create device node for mdraid array ${array}"
+            spawn "mknod /dev/md${arraynum} b 9 ${arraynum}"    || die "could not create device node for mdraid array ${array}"
         fi
         spawn "mdadm --create --run /dev/${array} ${arrayopts}" || die "could not create mdraid array ${array}"
     done
@@ -62,9 +62,9 @@ setup_lvm() {
     done
     for logvol in ${lvm_logvols}; do
         sleep 1
-        local volgroup="$(echo ${logvol} | cut -d '|' -f1)"
-        local size="$(echo ${logvol} | cut -d '|' -f2)"
-        local name="$(echo ${logvol} | cut -d '|' -f3)"
+        local volgroup="$(echo ${logvol}| cut -d '|' -f1)"
+        local size="$(echo ${logvol}    | cut -d '|' -f2)"
+        local name="$(echo ${logvol}    | cut -d '|' -f3)"
         spawn "lvcreate -L${size} -n${name} ${volgroup}" || die "could not create logical volume '${name}' with size ${size} in volume group '${volgroup}'"
     done
 }
@@ -72,13 +72,11 @@ setup_lvm() {
 luks_devices(){
     for device in ${luks}
     do
-#       echo $device
-        local devicetmp=$(echo ${device} | cut -d: -f1)
-        local luks_mapper=$(echo ${device} | cut -d: -f2)
-        local cipher=$(echo ${device} | cut -d: -f3)
-        local hash=$(echo ${device} | cut -d: -f4)
+        local devicetmp=$(echo ${device}    | cut -d: -f1)
+        local luks_mapper=$(echo ${device}  | cut -d: -f2)
+        local cipher=$(echo ${device}       | cut -d: -f3)
+        local hash=$(echo ${device}         | cut -d: -f4)
         local lukscmd=""
-#       echo "info $devicetmp $luks_mapper $cipher $hash"
         case ${luks_mapper} in
             swap)
                 lukscmd="cryptsetup -c ${cipher} -h ${hash} -d /dev/urandom create ${luks_mapper} ${devicetmp}"
@@ -88,7 +86,6 @@ luks_devices(){
                 ;;
         esac
         if [ -n "${lukscmd}" ]; then
-#           echo "lukscmd=${lukscmd}"
             spawn "${lukscmd}" || die "could not luks: ${lukscmd}"
         fi
     done
@@ -112,7 +109,7 @@ format_devices() {
                 formatcmd="mkfs.ext3 -j -m 1 -O dir_index,filetype,sparse_super ${devnode}"
                 ;;
             ext4)
-                #mkfs.ext4dev -j -m 1 -O dir_index,filetype,sparse_super,extents,huge_file /dev/mapper/root
+                # mkfs.ext4dev -j -m 1 -O dir_index,filetype,sparse_super,extents,huge_file /dev/mapper/root
                 formatcmd="mkfs.ext4 ${devnode}"
                 ;;
             btrfs)
@@ -143,11 +140,10 @@ mount_local_partitions() {
         for mount in ${localmounts}
         do
             debug mount_local_partitions "mount is ${mount}"
-            local devnode=$(echo ${mount} | cut -d ':' -f1)
-            local type=$(echo ${mount} | cut -d ':' -f2)
-            local mountpoint=$(echo ${mount} | cut -d ':' -f3)
-            local mountopts=$(echo ${mount} | cut -d ':' -f4)
-#           [ -n "${type}" ] && type="-t ${type}"
+            local devnode=$(echo ${mount}       | cut -d ':' -f1)
+            local type=$(echo ${mount}          | cut -d ':' -f2)
+            local mountpoint=$(echo ${mount}    | cut -d ':' -f3)
+            local mountopts=$(echo ${mount}     | cut -d ':' -f4)
             [ -n "${mountopts}" ] && mountopts="-o ${mountopts}"
             case "${type}" in
                 swap)
@@ -169,10 +165,10 @@ mount_local_partitions() {
 mount_network_shares() {
     if [ -n "${netmounts}" ]; then
         for mount in ${netmounts}; do
-            local export=$(echo ${mount} | cut -d '|' -f1)
-            local type=$(echo ${mount} | cut -d '|' -f2)
-            local mountpoint=$(echo ${mount} | cut -d '|' -f3)
-            local mountopts=$(echo ${mount} | cut -d '|' -f4)
+            local export=$(echo ${mount}        | cut -d '|' -f1)
+            local type=$(echo ${mount}          | cut -d '|' -f2)
+            local mountpoint=$(echo ${mount}    | cut -d '|' -f3)
+            local mountopts=$(echo ${mount}     | cut -d '|' -f4)
             [ -n "${mountopts}" ] && mountopts="-o ${mountopts}"
             case "${type}" in
                 nfs)
@@ -235,28 +231,24 @@ unpack_stage_tarball() {
 
 prepare_chroot() {
     debug prepare_chroot "copying /etc/resolv.conf into chroot"
-    spawn "cp /etc/resolv.conf ${chroot_dir}/etc/resolv.conf" || die "could not copy /etc/resolv.conf into chroot"
+    spawn "cp /etc/resolv.conf ${chroot_dir}/etc/resolv.conf"   || die "could not copy /etc/resolv.conf into chroot"
     debug prepare_chroot "mounting proc"
-    spawn "mount -t proc none ${chroot_dir}/proc" || die "could not mount proc"
+    spawn "mount -t proc none ${chroot_dir}/proc"               || die "could not mount proc"
     debug prepare_chroot "bind-mounting /dev"
-    spawn "mount -o rbind /dev ${chroot_dir}/dev/" || die "could not rbind-mount /dev"
-#    if [ "$(uname -r | cut -d. -f 2)" = "6" ]; then
-        debug prepare_chroot "bind-mounting /sys"
-        [ -d ${chroot_dir}/sys ] || mkdir ${chroot_dir}/sys
-        spawn "mount -o bind /sys ${chroot_dir}/sys" || die "could not bind-mount /sys"
-#    else
-#        debug prepare_chroot "kernel is not 2.6...not bind-mounting /sys"
-#    fi
+    spawn "mount -o rbind /dev ${chroot_dir}/dev/"              || die "could not rbind-mount /dev"
+    debug prepare_chroot "bind-mounting /sys"
+    [ -d ${chroot_dir}/sys ] || mkdir ${chroot_dir}/sys
+    spawn "mount -o bind /sys ${chroot_dir}/sys"                || die "could not bind-mount /sys"
 }
 
 setup_fstab() {
     echo -e "none\t/proc\tproc\tdefaults\t0 0\nnone\t/dev/shm\ttmpfs\tdefaults\t0 0" > ${chroot_dir}/etc/fstab
     for mount in ${localmounts}; do
         debug setup_fstab "mount is ${mount}"
-        local devnode=$(echo ${mount} | cut -d ':' -f1)
-        local type=$(echo ${mount} | cut -d ':' -f2)
-        local mountpoint=$(echo ${mount} | cut -d ':' -f3)
-        local mountopts=$(echo ${mount} | cut -d ':' -f4)
+        local devnode=$(echo ${mount}       | cut -d ':' -f1)
+        local type=$(echo ${mount}          | cut -d ':' -f2)
+        local mountpoint=$(echo ${mount}    | cut -d ':' -f3)
+        local mountopts=$(echo ${mount}     | cut -d ':' -f4)
         if [ "${mountpoint}" == "/" ]; then
             local dump_pass="0 1"
         elif [ "${mountpoint}" == "/boot" -o "${mountpoint}" == "/boot/" ]; then
@@ -267,27 +259,27 @@ setup_fstab() {
         echo -e "${devnode}\t${mountpoint}\t${type}\t${mountopts}\t${dump_pass}" >> ${chroot_dir}/etc/fstab
     done
     for mount in ${netmounts}; do
-        local export=$(echo ${mount} | cut -d '|' -f1)
-        local type=$(echo ${mount} | cut -d '|' -f2)
-        local mountpoint=$(echo ${mount} | cut -d '|' -f3)
-        local mountopts=$(echo ${mount} | cut -d '|' -f4)
+        local export=$(echo ${mount}        | cut -d '|' -f1)
+        local type=$(echo ${mount}          | cut -d '|' -f2)
+        local mountpoint=$(echo ${mount}    | cut -d '|' -f3)
+        local mountopts=$(echo ${mount}     | cut -d '|' -f4)
         echo -e "${export}\t${mountpoint}\t${type}\t${mountopts}\t0 0" >> ${chroot_dir}/etc/fstab
     done
 }
 
 fetch_repo_tree() {
-        debug fetch_repo_tree "tree_type is ${tree_type}"
-        if [ "${tree_type}" = "sync" ]; then
-            spawn_chroot "emerge --sync" || die "could not sync portage tree"
-        elif [ "${tree_type}" = "snapshot" ]; then
-            fetch "${portage_snapshot_uri}" "${chroot_dir}/$(get_filename_from_uri ${portage_snapshot_uri})" || die "could not fetch portage snapshot"
-        elif [ "${tree_type}" = "webrsync" ]; then
-            spawn_chroot "emerge-webrsync" || die "could not emerge-webrsync"
-        elif [ "${tree_type}" = "none" ]; then
-            warn "'none' specified...skipping"
-        else
-            die "Unrecognized tree_type: ${tree_type}"
-        fi
+    debug fetch_repo_tree "tree_type is ${tree_type}"
+    if [ "${tree_type}" = "sync" ]; then
+        spawn_chroot "emerge --sync"                                                                     || die "could not sync portage tree"
+    elif [ "${tree_type}" = "snapshot" ]; then
+        fetch "${portage_snapshot_uri}" "${chroot_dir}/$(get_filename_from_uri ${portage_snapshot_uri})" || die "could not fetch portage snapshot"
+    elif [ "${tree_type}" = "webrsync" ]; then
+        spawn_chroot "emerge-webrsync"                                                                   || die "could not emerge-webrsync"
+    elif [ "${tree_type}" = "none" ]; then
+        warn "'none' specified...skipping"
+    else
+        die "Unrecognized tree_type: ${tree_type}"
+    fi
 }
 
 unpack_repo_tree() {
@@ -331,24 +323,24 @@ build_kernel() {
     # use genkernel
     if [ "${kernel_builder}" == "genkernel" ]; then
         if [ -n "${kernel_config_uri}" ]; then
-            fetch "${kernel_config_uri}" "${chroot_dir}/tmp/kconfig" || die "could not fetch kernel config"
+            fetch "${kernel_config_uri}" "${chroot_dir}/tmp/kconfig"                    || die "could not fetch kernel config"
             spawn_chroot "genkernel --kernel-config=/tmp/kconfig ${genkernel_opts} all" || die "could not build custom kernel"
         elif [ -n "${kernel_config_file}" ]; then
-            cp "${kernel_config_file}" "${chroot_dir}/tmp/kconfig" || die "could not copy kernel config"
+            cp "${kernel_config_file}" "${chroot_dir}/tmp/kconfig"                      || die "could not copy kernel config"
             spawn_chroot "genkernel --kernel-config=/tmp/kconfig ${genkernel_opts} all" || die "could not build custom kernel"
         else
-            spawn_chroot "genkernel ${genkernel_opts} all" || die "could not build generic kernel"
+            spawn_chroot "genkernel ${genkernel_opts} all"                              || die "could not build generic kernel"
         fi
     # use KIGen 
     elif [ "${kernel_builder}" == "kigen" ]; then
         if [ -n "${kernel_config_uri}" ]; then
-            fetch "${kernel_config_uri}" "${chroot_dir}/tmp/kconfig" || die "could not fetch kernel config"
+            fetch "${kernel_config_uri}" "${chroot_dir}/tmp/kconfig"                                                             || die "could not fetch kernel config"
             spawn_chroot "kigen --dotconfig=/tmp/kconfig ${kigen_kernel_opts} kernel && kigen ${kigen_initramfs_opts} initramfs" || die "could not build custom kernel"
         elif [ -n "${kernel_config_file}" ]; then
             cp "${kernel_config_file}" "${chroot_dir}/tmp/kconfig" || die "could not copy kernel config"
             spawn_chroot "kigen --dotconfig=/tmp/kconfig ${kigen_kernel_opts} kernel && kigen ${kigen_initramfs_opts} initramfs" || die "could not build custom kernel"
         else
-            spawn_chroot "kigen ${kigen_kernel_opts} kernel && kigen ${kigen_initramfs_opts} initramfs" || die "could not build generic kernel"
+            spawn_chroot "kigen ${kigen_kernel_opts} kernel && kigen ${kigen_initramfs_opts} initramfs"                          || die "could not build generic kernel"
         fi
     fi
 }
@@ -383,12 +375,12 @@ setup_root_password() {
 setup_timezone() {
     if detect_baselayout2 ; then
         spawn_chroot "echo \"clock=\"${timezone}\" > /etc/conf.d/hwclock\"" || die "could not adjust clock config in /etc/conf.d/hwclock"
-        spawn_chroot "echo \"${timezone} > /etc/timezone\"" || die "could not set timezone in /etc/timezone"
+        spawn_chroot "echo \"${timezone} > /etc/timezone\""                 || die "could not set timezone in /etc/timezone"
     else
         if [ -e "${chroot_dir}/etc/localtime" ] ; then
             spawn "rm ${chroot_dir}/etc/localtime 2>/dev/null"
         fi
-        spawn "ln -s ../usr/share/zoneinfo/${timezone} ${chroot_dir}/etc/localtime" || die "could not set timezone"
+        spawn "ln -s ../usr/share/zoneinfo/${timezone} ${chroot_dir}/etc/localtime"                            || die "could not set timezone"
         spawn "/bin/sed -i 's:#TIMEZONE=\"Factory\":TIMEZONE=\"${timezone}\":' ${chroot_dir}/etc/conf.d/clock" || die "could not adjust TIMEZONE config in /etc/conf.d/clock"
     fi
 }
@@ -453,14 +445,14 @@ install_extra_packages() {
 add_and_remove_services() {
     if [ -n "${services_add}" ]; then
         for service_add in ${services_add}; do
-            local service="$(echo ${service_add} | cut -d '|' -f1)"
+            local service="$(echo ${service_add}  | cut -d '|' -f1)"
             local runlevel="$(echo ${service_add} | cut -d '|' -f2)"
             spawn_chroot "rc-update add ${service} ${runlevel}" || die "could not add service ${service} to the ${runlevel} runlevel"
         done
     fi
     if [ -n "${services_del}" ]; then
         for service_del in ${services_del}; do
-            service="$(echo ${service_del} | cut -d '|' -f1)"
+            service="$(echo ${service_del}  | cut -d '|' -f1)"
             runlevel="$(echo ${service_del} | cut -d '|' -f2)"
             spawn_chroot "rc-update del ${service} ${runlevel}"
         done
@@ -471,10 +463,10 @@ run_post_install_script() {
     if [ -n "${post_install_script_uri}" ]; then
         fetch "${post_install_script_uri}" "${chroot_dir}/var/tmp/post_install_script" || die "could not fetch post-install script"
         chmod +x "${chroot_dir}/var/tmp/post_install_script"
-        spawn_chroot "/var/tmp/post_install_script" || die "error running post-install script"
+        spawn_chroot "/var/tmp/post_install_script"                                    || die "error running post-install script"
         spawn "rm ${chroot_dir}/var/tmp/post_install_script"
     elif $(isafunc post_install); then
-        post_install || die "error running post_install()"
+        post_install                                                                   || die "error running post_install()"
     else
         debug run_post_install_script "no post-install script set"
     fi
@@ -483,31 +475,31 @@ run_post_install_script() {
 finishing_cleanup() {
     spawn "cp ${logfile} ${chroot_dir}/root/$(basename ${logfile})" || warn "could not copy install logfile into chroot"
     for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
-        spawn "umount ${mnt}" || warn "  could not unmount ${mnt}"
+        spawn "umount ${mnt}"                                       || warn "  could not unmount ${mnt}"
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
-        spawn "swapoff ${swap}" || warn "  could not deactivate swap on ${swap}"
+        spawn "swapoff ${swap}"                                     || warn "  could not deactivate swap on ${swap}"
     done
     for luksdev in $(ls /dev/mapper | grep -v control); do
-        spawn "cryptsetup remove ${luksdev}" || warn "could not remove luks device /dev/mapper/${luksdev}"
+        spawn "cryptsetup remove ${luksdev}"                        || warn "could not remove luks device /dev/mapper/${luksdev}"
     done
 }
 
 failure_cleanup() {
     if [ -f ${logfile} ]; then
-        spawn "mv ${logfile} ${logfile}.failed" || warn "could not move ${logfile} to ${logfile}.failed"
+        spawn "mv ${logfile} ${logfile}.failed"     || warn "could not move ${logfile} to ${logfile}.failed"
     fi
     for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
-        spawn "umount ${mnt}" || warn "  could not unmount ${mnt}.. "
+        spawn "umount ${mnt}"                       || warn "  could not unmount ${mnt}.. "
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
-        spawn "swapoff ${swap}" || warn "  could not deactivate swap on ${swap}"
+        spawn "swapoff ${swap}"                     || warn "  could not deactivate swap on ${swap}"
     done
     for array in $(set | grep '^mdraid_' | cut -d= -f1 | sed -e 's:^mdraid_::' | sort); do
         spawn "mdadm --manage --stop /dev/${array}" || die "could not stop mdraid array ${array}"
     done
     for luksdev in $(ls /dev/mapper | grep -v control); do
-        spawn "cryptsetup remove ${luksdev}" || die "could not remove luks device /dev/mapper/${luksdev}"
+        spawn "cryptsetup remove ${luksdev}"        || die "could not remove luks device /dev/mapper/${luksdev}"
     done
     #####################################################################
     # FIXME this takes care of umounting a second time ${chroot_dir}/boot
