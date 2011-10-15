@@ -130,18 +130,6 @@ bootloader_kernel_args() {
     bootloader_kernel_args="${kernel_args}"
 }
 
-#logger() {
-#   local pkg=$1
-#   
-#   logging_daemon="${pkg}"
-#}
-#
-#cron() {
-#   local pkg=$1
-#   
-#   cron_daemon="${pkg}"
-#}
-
 rootpw() {
     do_password=yes
     local pass=$1
@@ -337,6 +325,7 @@ logfile() {
 
 skip() {
     local func=$1
+    
     eval "skip_${func}=1"
 }
 
