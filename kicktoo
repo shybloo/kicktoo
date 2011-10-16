@@ -11,6 +11,7 @@ do_part=0
 do_raid=0
 do_lvm=0
 do_luks=0
+do_makeconf=0
 do_kernel=0
 do_postnet=0
 do_password=0
@@ -220,6 +221,9 @@ if [ "${do_stage_uri}" == "yes" ] || [ "${do_stage_path}" == "yes" ]; then
     runstep unpack_stage_tarball    "Unpacking stage tarball"
     runstep prepare_chroot          "Preparing chroot"
     runstep setup_fstab             "Setting up /etc/fstab"
+fi
+if [ "${do_makeconf}" == "yes"      ]; then
+	runstep create_makeconf               "Creating custom make.conf"
 fi
 if [ "${do_tree}" == "yes"          ]; then
     runstep fetch_repo_tree         "Fetching repository tree"

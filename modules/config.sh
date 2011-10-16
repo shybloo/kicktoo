@@ -154,7 +154,15 @@ stage_uri() {
 stage_file() {
     local file=$1
 
-    stage_file="${file}"
+   	stage_file="${file}"
+}
+
+makeconf_line() {
+	do_makeconf=yes
+    local makevar=$1
+    local makeval=$2
+
+    eval "makeconf_${makevar}=\"${makeval}\""
 }
 
 tree_type() {
