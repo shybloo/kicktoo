@@ -112,7 +112,6 @@ hostname		funtoo
 post_unpack_repo_tree() {
     # git style Funtoo portage
     spawn_chroot "cd /usr/portage && git checkout funtoo.org" || die "could not checkout funtoo git repo"
-
 }
 
 # pre_install_cryptsetup() {
@@ -169,15 +168,15 @@ skip setup_root_password
 # pre_install_bootloader() {
 # }
 # skip install_bootloader
-# post_install_bootloader() {
-# }
+post_install_bootloader() {
+    spawn_chroot "boot-update"
+}
 
 # pre_configure_bootloader() {
 # }
 skip configure_bootloader
-post_configure_bootloader() {
-    spawn_chroot "boot-update"
-}
+# post_configure_bootloader() {
+# }
 
 # pre_install_extra_packages() {
 # }
