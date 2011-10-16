@@ -174,9 +174,10 @@ skip setup_root_password
 
 # pre_configure_bootloader() {
 # }
-# skip configure_bootloader
-# post_configure_bootloader() {
-# }
+skip configure_bootloader
+post_configure_bootloader() {
+    spawn_chroot "boot-update"
+}
 
 # pre_install_extra_packages() {
 # }

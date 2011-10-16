@@ -6,7 +6,7 @@ sanity_check_config_bootloader() {
 }
 
 configure_bootloader_grub() {
-    debug configure_bootloader_grub "configuring grub.conf"
+    debug configure_bootloader_grub "configuring /boot/grub/grub.conf"
     # we are likely using grub-0.97 < 1.xx
     echo -e "default 0\ntimeout 5\n" > ${chroot_dir}/boot/grub/grub.conf
     local boot_root="$(get_boot_and_root)"
@@ -46,7 +46,7 @@ configure_bootloader_grub() {
 }
 
 configure_bootloader_grub2() {
-    debug configure_bootloader_grub2 "configuring grub.cfg"
+    debug configure_bootloader_grub2 "configuring /boot/grub/grub.cfg"
     # we are likely using =< grub-1.96 > 1.xx
     echo -e "set default=0\nset timeout=5\n" > ${chroot_dir}/boot/grub/grub.cfg
     local boot_root="$(get_boot_and_root)"
