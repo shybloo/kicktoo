@@ -229,6 +229,20 @@ unpack_stage_tarball() {
     fi
 }
 
+create_makeconf() {
+    O=$IFS
+    IFS=$(echo -en "\n\b")
+
+    for var in $(set | grep ^makeconf_); do
+        makeconfline=$(echo $var | sed s/makeconf_// | sed s/\'/\"/g )
+        cat >> ${chroot_dir}/etc/make.conf <<- EOF
+		${makeconfline}
+		EOF
+    done
+
+    IFS=$O
+}
+
 prepare_chroot() {
     debug prepare_chroot "copying /etc/resolv.conf into chroot"
     spawn "cp /etc/resolv.conf ${chroot_dir}/etc/resolv.conf"   || die "could not copy /etc/resolv.conf into chroot"
