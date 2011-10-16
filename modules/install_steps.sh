@@ -468,6 +468,7 @@ finishing_cleanup() {
     spawn "cp ${logfile} ${chroot_dir}/root/$(basename ${logfile})" || warn "could not copy install logfile into chroot"
     for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
         spawn "umount ${mnt}"                                       || warn "  could not unmount ${mnt}"
+        sleep 0.3
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
         spawn "swapoff ${swap}"                                     || warn "  could not deactivate swap on ${swap}"
@@ -483,6 +484,7 @@ failure_cleanup() {
     fi
     for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
         spawn "umount ${mnt}"                       || warn "  could not unmount ${mnt}.. "
+        sleep 0.3
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
         spawn "swapoff ${swap}"                     || warn "  could not deactivate swap on ${swap}"
