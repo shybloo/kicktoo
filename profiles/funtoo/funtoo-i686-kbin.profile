@@ -129,11 +129,8 @@ post_unpack_repo_tree() {
 # pre_build_kernel() {
 # }
 # skip build_kernel
-post_build_kernel() {
-    spawn_chroot "cat /etc/pam.d/chpasswd | grep -v password > /etc/pam.d/chpasswd.tmp"
-    spawn_chroot "echo password include system-auth >> /etc/pam.d/chpasswd.tmp"
-    spawn_chroot "mv /etc/pam.d/chpasswd.tmp /etc/pam.d/chpasswd"
-}
+# post_build_kernel() {
+# }
 
 # pre_setup_network_post() {
 # }
@@ -143,7 +140,7 @@ post_build_kernel() {
 
 # pre_setup_root_password() {
 # }
-skip setup_root_password
+# skip setup_root_password
 # post_setup_root_password() {
 # }
 
