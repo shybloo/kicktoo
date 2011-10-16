@@ -169,7 +169,9 @@ skip setup_root_password
 # }
 # skip install_bootloader
 post_install_bootloader() {
-    spawn_chroot "boot-update"
+    # $(echo ${device} | cut -c1-8) is like /dev/sdx
+    spawn_chroot "grub-install $(echo ${device} | cut -c1-8)" || die "cannot grub-install $(echo ${device} | cut -c1-8)"
+    spawn_chroot "boot-update"                                || die "boot-update failed"
 }
 
 # pre_configure_bootloader() {
