@@ -406,25 +406,17 @@ setup_host() {
 }
 
 install_bootloader() {
-    if [ "${bootloader}" = "none" ]; then
-        debug install_bootloader "bootloader is 'none'...skipping"
-    else
-        spawn_chroot "emerge ${bootloader}" || die "could not emerge bootloader"
-    fi
+    spawn_chroot "emerge ${bootloader}" || die "could not emerge bootloader"
 }
 
 configure_bootloader() {
-    if [ "${bootloader}" = "none" ]; then
-        debug configure_bootloader "bootloader is 'none'...skipping configuration"
+    if detect_grub2; then
+        bootloader="grub2"
+    fi
+    if $(isafunc configure_bootloader_${bootloader}); then
+        configure_bootloader_${bootloader} || die "could not configure bootloader ${bootloader}"
     else
-        if detect_grub2; then
-            bootloader="grub2"
-        fi
-        if $(isafunc configure_bootloader_${bootloader}); then
-            configure_bootloader_${bootloader} || die "could not configure bootloader ${bootloader}"
-        else
-            die "I don't know how to configure ${bootloader}"
-        fi
+        die "I don't know how to configure ${bootloader}"
     fi
 }
 
