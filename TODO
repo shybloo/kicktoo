@@ -9,3 +9,4 @@
 DONE   - 1 kernel for normal install
        - 1 kernel for luks install
        - 1 kernel for lvm install
+     - add support for /usr separated partition (linuxrc+initrd.scripts)
