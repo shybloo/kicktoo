@@ -110,25 +110,6 @@ bootloader - Specify the bootloader to use (defaults to grub)
   Parameters:
     bootloader - grub, lilo
 
-==============================================================
-logger - Specify the bootloader to use (defaults to syslog-ng) DEPRECATED
-
-  Usage:
-    logger <logger>
-
-  Parameters:
-    logger - metalog, syslog-ng
-
-==============================================================
-cron - Specify the cron daemon to use (defaults to vixie-cron) DEPRECATED
-
-  Usage:
-    cron <cron>
-
-  Parameters:
-    cron - the name of the cron daemon to use (such as vixie-cron). you can
-           specify 'none' here to skip installing a cron daemon
-
 ====================================================================
 rootpw - Sets the root password (required if not using rootpw_crypt)
 
