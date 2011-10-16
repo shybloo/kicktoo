@@ -223,7 +223,7 @@ if [ "${do_stage_uri}" == "yes" ] || [ "${do_stage_path}" == "yes" ]; then
     runstep setup_fstab             "Setting up /etc/fstab"
 fi
 if [ "${do_makeconf}" == "yes"      ]; then
-	runstep create_makeconf               "Creating custom make.conf"
+    runstep create_makeconf         "Creating custom make.conf"
 fi
 if [ "${do_tree}" == "yes"          ]; then
     runstep fetch_repo_tree         "Fetching repository tree"

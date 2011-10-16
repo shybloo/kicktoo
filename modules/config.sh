@@ -158,7 +158,7 @@ stage_file() {
 }
 
 makeconf_line() {
-	do_makeconf=yes
+    do_makeconf=yes
     local makevar=$1
     local makeval=$2
 

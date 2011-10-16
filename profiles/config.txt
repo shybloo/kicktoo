@@ -367,3 +367,13 @@ use_linux32 - Enable the use of linux32 for doing 32ul installs on 64-bit boxes
 
   Usage:
     use_linux32
+
+======================================================
+makeconf_line - Append a config line to /etc/make.conf
+
+  Usage: 
+    makeconf_line <KEY> "<values>"
+
+  Parameters:
+    makeconf_line USE           "perl php"
+    makeconf_line VIDEO_CARDS   "intel"
