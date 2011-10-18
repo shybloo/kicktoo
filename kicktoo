@@ -168,20 +168,17 @@ else
         exit 1
     fi
 
-    # if pvcreate is missing, only exit in case of --lvm
+    if [ "${do_raid}" == "yes" ]; then
+        has "mdadm"
+    fi
+
     if [ "${do_lvm}" == "yes" ]; then
         has "pvcreate"
     fi
 
-    # if cryptsetup is missing, only exit in case of --luks
     if [ "${do_luks}" == "yes" ]; then
             has "cryptsetup"
     fi
-
-    # if dist=exherbo, check we have unxz
-#    if [ "${distro}" == "exherbo" ] ; then
-#            has "unxz"
-#    fi
 
     arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
 
