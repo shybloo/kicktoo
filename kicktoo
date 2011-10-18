@@ -177,7 +177,7 @@ else
     fi
 
     if [ "${do_luks}" == "yes" ]; then
-            has "cryptsetup"
+        has "cryptsetup"
     fi
 
     arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
