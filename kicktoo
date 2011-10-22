@@ -29,9 +29,7 @@ do_services=0
 trap "failure_cleanup" TERM KILL INT QUIT ABRT
 
 # can't hurt
-if [ "$(whoami)" != "root" ] ; then
-    echo "You must be root" ; exit 1
-fi
+[ "$(whoami)" != "root" ] && echo "You must be root" ; exit 1
 
 has() {
     if ( which $1 &>/dev/null ) ; then
@@ -58,9 +56,8 @@ import() {
 
 usage() {
     msg=$1
-    if [ -n "${msg}" ]; then
-        echo -e "${msg}\n"
-    fi
+    [ -n "${msg}" ] && echo -e "${msg}\n"
+    
     cat <<EOF
 Usage:
     $0 [options] <profile>
@@ -151,10 +148,12 @@ if [ -n "${server}" ]; then
         profile="/tmp/kicktoo_profile"
     fi
 fi
+
 if [ -z "${profile}" ]; then
     usage "You must specify a profile"
     exit 1
 fi
+
 if [ ! -f "${profile}" ]; then
     error "Specified profile does not exist!"
     exit 1
@@ -169,18 +168,15 @@ else
         exit 1
     fi
 
-    [ "${do_raid}" == "yes" ] && has "mdadm"
-    [ "${do_lvm}"  == "yes" ] && has "pvcreate"
-    [ "${do_luks}" == "yes" ] && has "cryptsetup"
+    [ "${do_raid}" == "yes" ]       && has "mdadm"
+    [ "${do_lvm}"  == "yes" ]       && has "pvcreate"
+    [ "${do_luks}" == "yes" ]       && has "cryptsetup"
     [ -n "$(grep xz ${profile})"  ] && has "unxz"
 
     arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
 
     # call sanity_check_config if 'kicktoo -s <profile>' is run and exit
-    if [ "${sanitycheck}" = "1" ]; then
-        runstep sanity_check_config     "Sanity checking config"
-        exit 0
-    fi
+    [ "${sanitycheck}" = "1" ] && runstep sanity_check_config "Sanity checking config" ; exit 0
 fi
 
 debug main "Pushing system for ${arch}"
@@ -189,7 +185,7 @@ run_pre_install_script                                                "Running p
 
 [ "${do_part}"          == "yes" ] && runstep partition               "Partitioning"
 [ "${do_raid}"          == "yes" ] && runstep setup_mdraid            "Setting up RAID arrays"
-[ "${do_lvm}"           == "yes"  ] && runstep setup_lvm              "Setting up LVM volumes"
+[ "${do_lvm}"           == "yes" ] && runstep setup_lvm               "Setting up LVM volumes"
 [ "${do_luks}"          == "yes" ] && runstep luks_devices            "Encrypting devices"
 [ "${do_format}"        == "yes" ] && runstep format_devices          "Formatting devices"
 [ "${do_localmounts}"   == "yes" ] && runstep mount_local_partitions  "Mounting local partitions"
