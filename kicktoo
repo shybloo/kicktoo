@@ -155,10 +155,7 @@ source "${profile}"
 # profile variables are now accessible
 # export  variables are now accessible (i.e. do_luks) from config.sh functions
 
-if ! touch ${logfile} 2>/dev/null; then
-    error "Logfile is not writeable!"
-    exit 1
-fi
+! touch ${logfile} 2>/dev/null && ( error "Logfile is not writeable!" ; exit 1 )
 
 [ "${do_raid}" == "yes" ]      && has "mdadm"
 [ "${do_lvm}"  == "yes" ]      && has "pvcreate"
