@@ -312,12 +312,12 @@ unpack_repo_tree() {
     fi
 }
 
-install_cryptsetup() {
-    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
-    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
-    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
-    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
-}
+#install_cryptsetup() {
+#    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
+#    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
+#    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
+#    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
+#}
 
 copy_kernel() {
     spawn_chroot "mount /boot"

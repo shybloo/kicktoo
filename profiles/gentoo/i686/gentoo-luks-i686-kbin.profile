@@ -21,13 +21,10 @@ latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
 tree_type   snapshot    http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2
 
-# get kernel dotconfig from running kernel
-cat /proc/config.gz | gzip -d > /dotconfig
-
-kernel_config_file      /dotconfig
-rootpw                  a
-genkernel_opts          --luks # required
-kernel_sources          gentoo-sources
+# ship the binary kernel instead of compiling (faster)
+kernel_binary           $(pwd)/kbin/kernel-genkernel-x86-2.6.39-gentoo-r3
+initramfs_binary        $(pwd)/kbin/initramfs-genkernel-x86-2.6.39-gentoo-r3
+systemmap_binary        $(pwd)/kbin/System.map-genkernel-x86-2.6.39-gentoo-r3
 
 timezone                UTC
 bootloader              grub
@@ -36,9 +33,9 @@ keymap                  us # fr be-latin1
 hostname                gentoo-luks
 extra_packages          dhcpcd # openssh syslog-ng
 
-#rcadd                   sshd default
-#rcadd                   syslog-ng default
-#rcadd                   vixie-cron default
+# rcadd                   sshd default
+# rcadd                   syslog-ng default
+# rcadd                   vixie-cron default
 
 #############################################################################
 # 1. commented skip runsteps are actually running!                          #

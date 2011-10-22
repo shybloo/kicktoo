@@ -187,7 +187,7 @@ fi
 [ "${do_makeconf}"      == "yes" ] && runstep create_makeconf         "Creating custom make.conf"
 [ "${do_tree}"          == "yes" ] && runstep fetch_repo_tree         "Fetching repository tree"
 [ "${do_tree}"          == "yes" ] && runstep unpack_repo_tree        "Unpacking repository tree"
-[ "${do_luks}"          == "yes" ] && runstep install_cryptsetup      "Installing cryptsetup"
+#[ "${do_luks}"          == "yes" ] && runstep install_cryptsetup      "Installing cryptsetup"
 [ "${do_kbin}"          == "yes" ] && runstep copy_kernel             "Copying precompiled kernel"
 [ "${do_kernel}"        == "yes" ] && runstep build_kernel            "Building kernel"
 [ "${do_postnet}"       == "yes" ] && runstep setup_network_post      "Setting up post-install networking"
