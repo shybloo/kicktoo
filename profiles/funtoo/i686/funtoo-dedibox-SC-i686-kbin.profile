@@ -180,8 +180,7 @@ skip configure_bootloader
 # }
 # skip install_extra_packages
 post_install_extra_packages() {
-    spawn_chroot "cd /etc/init.d"
-    spawn_chroot "ln -s netif.tmpl netif.eth0"
+    spawn_chroot "ln -s /etc/init.d/netif.tmpl /etc/init.d/netif.eth0"
     cat >> ${chroot_dir}/etc/conf.d/netif.eth0 <<EOF
 template="interface"
 ipaddr="88.191.xxx.xxx/24"
