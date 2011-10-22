@@ -23,9 +23,8 @@ rootpw                  a
 bootloader              grub
 keymap                  fr
 hostname                funtoo
-extra_packages          openssh # dhcpcd syslog-ng vim
+extra_packages          openssh
 
-rcadd                   network     default
 rcadd                   sshd       default
 #rcadd                   syslog-ng  default
 
@@ -181,10 +180,16 @@ skip configure_bootloader
 # }
 # skip install_extra_packages
 post_install_extra_packages() {
-    cat >> ${chroot_dir}/etc/conf.d/network <<EOF
-ifconfig_eth0="88.xxx.xxx.xxx netmask 255.255.255.0 brd 88.xxx.xxx.255"
-defaultroute="gw 88.xxx.xxx.1"
+    spawn_chroot "cd /etc/init.d"
+    spawn_chroot "ln -s netif.tmpl netif.eth0"
+    cat >> ${chroot_dir}/etc/conf.d/netif.eth0 <<EOF
+template="interface"
+ipaddr="88.191.xxx.xxx/24"
+gateway="88.191.xxx.1"
+nameservers="88.191.xxx.1"
+domain=""
 EOF
+    spawn_chroot "rc-update add netif.eth0 default"
 }
 
 # pre_add_and_remove_services() {
