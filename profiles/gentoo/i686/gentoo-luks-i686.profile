@@ -23,15 +23,14 @@ tree_type   snapshot    http://distfiles.gentoo.org/snapshots/portage-latest.tar
 
 # get kernel dotconfig from running kernel
 cat /proc/config.gz | gzip -d > /dotconfig
-
 kernel_config_file      /dotconfig
-rootpw                  a
-genkernel_opts          --luks # required
+genkernel_opts          --loglevel=5 --luks
 kernel_sources          gentoo-sources
 
 timezone                UTC
 bootloader              grub
 bootloader_kernel_args  crypt_root=/dev/sda3 # should match root device in the $luks variable
+rootpw                  a
 keymap                  us # fr be-latin1
 hostname                gentoo-luks
 extra_packages          dhcpcd # openssh syslog-ng
