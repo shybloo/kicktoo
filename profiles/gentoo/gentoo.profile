@@ -11,10 +11,10 @@ mountfs /dev/sda2 swap
 mountfs /dev/sda3 ext4 / noatime
 
 # retrieve latest autobuild stage version for stage_uri
-wget -q http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-$(uname -m).txt -O /tmp/stage3.version
+wget -q http://distfiles.gentoo.org/releases/${arch}/autobuilds/latest-stage3-$(uname -m).txt -O /tmp/stage3.version
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
-stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
+stage_uri               http://distfiles.gentoo.org/releases/${arch}/autobuilds/${latest_stage_version}
 tree_type   snapshot    http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2
 
 # get kernel dotconfig from running kernel

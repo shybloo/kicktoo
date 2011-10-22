@@ -159,6 +159,8 @@ if [ ! -f "${profile}" ]; then
     exit 1
 fi    
 
+arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
+
 # load profile
 source "${profile}"
 # profile variables are now accessible
@@ -170,9 +172,6 @@ source "${profile}"
 [ "${do_lvm}"  == "yes" ]      && has "pvcreate"
 [ "${do_luks}" == "yes" ]      && has "cryptsetup"
 [ -n "$(grep xz ${profile})" ] && has "unxz"
-
-arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
-
 # call sanity_check_config if 'kicktoo -s <profile>' is run and exit
 #[ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
 
