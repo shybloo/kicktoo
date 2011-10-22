@@ -29,7 +29,7 @@ do_services=0
 trap "failure_cleanup" TERM KILL INT QUIT ABRT
 
 # can't hurt
-if [ "$(whoami)" = "root" ]; then
+if [ "$(whoami)" != "root" ]; then
     echo "You must be root"
     exit 1
 fi
