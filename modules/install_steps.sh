@@ -317,7 +317,6 @@ install_cryptsetup() {
     spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
     spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
     spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
-#    run_emerge cryptsetup || die "could not emerge cryptsetup"
 }
 
 copy_kernel() {

@@ -137,7 +137,7 @@ pre_build_kernel() {
 
 	# perhaps in kicktoo program
 	if [[ $CCACHE == "true" ]]; then
-		run_emerge ccache
+        spawn_chroot "emerge ccache"
 		spawn_chroot "mkdir -p /var/tmp/ccache"
 		spawn "mkdir -p /var/tmp/ccache/${ARCH}"
 		spawn "mount /var/tmp/ccache/${ARCH} ${chroot_dir}/var/tmp/ccache -o bind"
