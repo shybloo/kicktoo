@@ -176,7 +176,7 @@ else
     arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
 
     # call sanity_check_config if 'kicktoo -s <profile>' is run and exit
-    [ "${sanitycheck}" = "1" ] && runstep sanity_check_config "Sanity checking config" ; exit 0
+    [ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
 fi
 
 debug main "Pushing system for ${arch}"
