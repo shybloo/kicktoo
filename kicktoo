@@ -179,10 +179,10 @@ run_pre_install_script                                                "Running p
 [ "${do_localmounts}"   == "yes" ] && runstep mount_local_partitions  "Mounting local partitions"
 [ "${do_netmounts}"     == "yes" ] && runstep mount_network_shares    "Mounting network shares"
 if [ "${do_stage_uri}"  == "yes" ] || [ "${do_stage_path}" == "yes" ]; then
- runstep fetch_stage_tarball     "Fetching stage tarball"
- runstep unpack_stage_tarball    "Unpacking stage tarball"
- runstep prepare_chroot          "Preparing chroot"
- runstep setup_fstab             "Setting up /etc/fstab"
+ runstep fetch_stage_tarball                                          "Fetching stage tarball"
+ runstep unpack_stage_tarball                                         "Unpacking stage tarball"
+ runstep prepare_chroot                                               "Preparing chroot"
+ runstep setup_fstab                                                  "Setting up /etc/fstab"
 fi
 [ "${do_makeconf}"      == "yes" ] && runstep create_makeconf         "Creating custom make.conf"
 [ "${do_tree}"          == "yes" ] && runstep fetch_repo_tree         "Fetching repository tree"
