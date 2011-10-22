@@ -120,12 +120,6 @@ extra_packages          dhcpcd # openssh syslog-ng
 # post_unpack_repo_tree() {
 # }
 
-# pre_install_cryptsetup() {
-# }
-# skip install_cryptsetup
-# post_install_cryptsetup() {
-# }
-
 # pre_copy_kernel() {
 # }
 # skip copy_kernel

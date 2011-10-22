@@ -1,14 +1,14 @@
-part sda 1 83 100M  # /boot
-part sda 2 83 +     # /
+part sda 1 83 100M
+part sda 2 82 2048M
+part sda 3 83 +
 
-luks bootpw    a    # CHANGE ME
-luks /dev/sda2 root aes sha256
+format /dev/sda1 ext2
+format /dev/sda2 swap
+format /dev/sda3 ext4
 
-format /dev/sda1        ext2
-format /dev/mapper/root ext4
-
-mountfs /dev/sda1        ext2 /boot
-mountfs /dev/mapper/root ext4 / noatime
+mountfs /dev/sda1 ext2 /boot
+mountfs /dev/sda2 swap
+mountfs /dev/sda3 ext4 / noatime
 
 # retrieve latest autobuild stage version for stage_uri
 wget -q http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i686.txt -O /tmp/stage3.version
@@ -17,23 +17,20 @@ latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 stage_uri               http://distfiles.gentoo.org/releases/x86/autobuilds/${latest_stage_version}
 tree_type   snapshot    http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2
 
-# get kernel dotconfig from running kernel
-cat /proc/config.gz | gzip -d > /dotconfig
-kernel_config_file      /dotconfig
-kernel_sources          gentoo-sources
-genkernel_opts          --loglevel=5 --luks
+# ship the binary kernel instead of compiling (faster)
+kernel_binary           $(pwd)/kbin/kernel-genkernel-x86-2.6.39-gentoo-r3
+initramfs_binary        $(pwd)/kbin/initramfs-genkernel-x86-2.6.39-gentoo-r3
+systemmap_binary        $(pwd)/kbin/System.map-genkernel-x86-2.6.39-gentoo-r3
 
 timezone                UTC
-bootloader              grub
-bootloader_kernel_args  crypt_root=/dev/sda2 # should match root device in the $luks variable
 rootpw                  a
-keymap                  fr # be-latin1 us
-hostname                gentoo-luks
-#extra_packages         openssh syslog-ng
+bootloader              grub
+keymap	                us # be-latin1 fr
+hostname                gentoo
+extra_packages          dhcpcd syslog-ng vim # openssh
 
-#rcadd                  sshd default
-#rcadd                  syslog-ng default
-#rcadd                  vixie-cron default
+#rcadd                   sshd       default
+#rcadd                   syslog-ng  default
 
 #############################################################################
 # 1. commented skip runsteps are actually running!                          #
@@ -175,12 +172,8 @@ hostname                gentoo-luks
 # pre_install_extra_packages() {
 # }
 # skip install_extra_packages
-post_install_extra_packages() {
-    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
-    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
-    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
-    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
-}
+# post_install_extra_packages() {
+# }
 
 # pre_add_and_remove_services() {
 # }

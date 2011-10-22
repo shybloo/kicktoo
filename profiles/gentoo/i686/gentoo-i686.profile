@@ -19,7 +19,6 @@ tree_type   snapshot    http://distfiles.gentoo.org/snapshots/portage-latest.tar
 
 # get kernel dotconfig from running kernel
 cat /proc/config.gz | gzip -d > /dotconfig
-
 kernel_config_file      /dotconfig
 kernel_sources	        gentoo-sources
 genkernel_opts          --loglevel=5
@@ -30,6 +29,7 @@ bootloader              grub
 keymap	                us # be-latin1 fr
 hostname                gentoo
 extra_packages          dhcpcd syslog-ng vim # openssh
+
 #rcadd                   sshd       default
 #rcadd                   syslog-ng  default
 
@@ -114,12 +114,6 @@ extra_packages          dhcpcd syslog-ng vim # openssh
 # }
 # skip unpack_repo_tree
 # post_unpack_repo_tree() {
-# }
-
-# pre_install_cryptsetup() {
-# }
-# skip install_cryptsetup
-# post_install_cryptsetup() {
 # }
 
 # pre_copy_kernel() {
