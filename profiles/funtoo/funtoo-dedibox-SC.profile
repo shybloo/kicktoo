@@ -10,7 +10,7 @@ mountfs /dev/sda1 ext2 /boot
 mountfs /dev/sda2 swap
 mountfs /dev/sda3 ext4 / noatime
 
-stage_uri               http://ftp.osuosl.org/pub/funtoo/funtoo-stable/x86-32bit/i686/stage3-current.tar.xz
+stage_uri               http://ftp.osuosl.org/pub/funtoo/funtoo-stable/x86-32bit/$(uname -m)/stage3-current.tar.xz
 tree_type     snapshot  http://ftp.osuosl.org/pub/funtoo/funtoo-stable/snapshots/portage-current.tar.xz
 
 # compile kernel from sources using the right .config
@@ -112,12 +112,6 @@ post_unpack_repo_tree() {
     # git style Funtoo portage
     spawn_chroot "cd /usr/portage && git checkout funtoo.org" || die "could not checkout funtoo git repo"
 }
-
-# pre_install_cryptsetup() {
-# }
-# skip install_cryptsetup
-# post_install_cryptsetup() {
-# }
 
 # pre_copy_kernel() {
 # }

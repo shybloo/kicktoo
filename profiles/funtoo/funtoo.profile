@@ -10,13 +10,12 @@ mountfs /dev/sda1 ext2 /boot
 mountfs /dev/sda2 swap
 mountfs /dev/sda3 ext4 / noatime
 
-stage_uri               http://ftp.osuosl.org/pub/funtoo/funtoo-stable/x86-32bit/i686/stage3-current.tar.xz
+stage_uri               http://ftp.osuosl.org/pub/funtoo/funtoo-stable/x86-32bit/$(uname -m)/stage3-current.tar.xz
 tree_type   snapshot    http://ftp.osuosl.org/pub/funtoo/funtoo-stable/snapshots/portage-current.tar.xz
 
-# ship the binary kernel instead of compiling (faster)
-kernel_binary           $(pwd)/kbin/kernel-genkernel-x86-2.6.39-gentoo-r3
-initramfs_binary        $(pwd)/kbin/initramfs-genkernel-x86-2.6.39-gentoo-r3
-systemmap_binary        $(pwd)/kbin/System.map-genkernel-x86-2.6.39-gentoo-r3
+cat /proc/config.gz | gzip -d > /dotconfig
+kernel_config_file      /dotconfig
+kernel_sources          gentoo-sources
 
 timezone		UTC
 rootpw 			a
@@ -31,7 +30,6 @@ hostname		funtoo
 #############################################################################
 # 1. commented skip runsteps are actually running!                          #
 # 2. put your custom code if any in pre_ or post_ functions                 #
-#   (if you use skip too, you overwrite with your code the one from Kicktoo)#
 #############################################################################
 
 # pre_partition() {
@@ -113,12 +111,6 @@ post_unpack_repo_tree() {
     # git style Funtoo portage
     spawn_chroot "cd /usr/portage && git checkout funtoo.org" || die "could not checkout funtoo git repo"
 }
-
-# pre_install_cryptsetup() {
-# }
-# skip install_cryptsetup
-# post_install_cryptsetup() {
-# }
 
 # pre_copy_kernel() {
 # }
