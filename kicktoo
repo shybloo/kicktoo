@@ -82,7 +82,7 @@ Tip:
 FOE
 }
 
-for i in output misc spawn fetcher portage bootloader partition install_steps config stepcontrol server 
+for i in output misc spawn fetcher bootloader partition install_steps config stepcontrol server 
 do
     import $i
 done
