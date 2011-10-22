@@ -23,6 +23,11 @@ kernel_config_file      /dotconfig
 kernel_sources          gentoo-sources
 genkernel_opts          --loglevel=5 --luks
 
+# ship the binary kernel instead of compiling (faster)
+#kernel_binary           $(pwd)/kbin/kernel-genkernel-x86-2.6.39-gentoo-r3
+#initramfs_binary        $(pwd)/kbin/initramfs-genkernel-x86-2.6.39-gentoo-r3
+#systemmap_binary        $(pwd)/kbin/System.map-genkernel-x86-2.6.39-gentoo-r3
+
 timezone                UTC
 bootloader              grub
 bootloader_kernel_args  crypt_root=/dev/sda2 # should match root device in the $luks variable
