@@ -85,7 +85,7 @@ luks_devices(){
                 lukscmd="echo ${boot_password} | cryptsetup -c ${cipher}-cbc-essiv:${hash} luksFormat ${devicetmp} && echo ${boot_password} | cryptsetup luksOpen ${devicetmp} ${luks_mapper}"
                 ;;
         esac
-        [ -n "${lukscmd}" ] && spawn "${lukscmd}" || die "could not luks: ${lukscmd}"
+        [ -n "${lukscmd}" ] && ( spawn "${lukscmd}" || die "could not luks: ${lukscmd}" )
     done
     unset boot_password # we don't need it anymore
 }
@@ -184,7 +184,7 @@ mount_network_shares() {
 
 fetch_stage_tarball() {
     debug fetch_stage_tarball "fetching stage tarball"
-    [ -n ${stage_uri} ] && fetch "${stage_uri}" "${chroot_dir}/$(get_filename_from_uri ${stage_uri})" || die "Could not fetch stage tarball"
+    [ -n ${stage_uri} ] && ( fetch "${stage_uri}" "${chroot_dir}/$(get_filename_from_uri ${stage_uri})" || die "Could not fetch stage tarball" )
 }
 
 unpack_stage_tarball() {
