@@ -145,9 +145,9 @@ do
     has "${a}"
 done
 
-if [ -n "$(grep xz ${profile})"  ]; then
-    has unxz
-fi
+#if [ -n "$(grep xz ${profile})"  ]; then
+#    has "unxz"
+#fi
 
 if [ -n "${server}" ]; then
     server_init
