@@ -29,7 +29,10 @@ do_services=0
 trap "failure_cleanup" TERM KILL INT QUIT ABRT
 
 # can't hurt
-[ "$(whoami)" = "root" ] || ( echo "You must be root" ; exit 1 )
+if [ "$(whoami)" = "root" ]; then
+    echo "You must be root"
+    exit 1
+fi
 
 has() {
     if ( which $1 &>/dev/null ) ; then
@@ -147,8 +150,14 @@ if [ -n "${server}" ]; then
     server_get_profile && profile="/tmp/kicktoo_profile"
 fi
 
-[ -z "${profile}" ]   && ( usage "You must specify a profile" ; exit 1 )
-[ ! -f "${profile}" ] && ( error "Specified profile does not exist!" ; exit 1 )
+if [ -z "${profile}" ]; then
+    usage "You must specify a profile"
+    exit 1
+fi
+if [ ! -f "${profile}" ]; then
+    error "Specified profile does not exist!"
+    exit 1
+fi    
 
 # load profile
 source "${profile}"
@@ -165,7 +174,7 @@ source "${profile}"
 arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
 
 # call sanity_check_config if 'kicktoo -s <profile>' is run and exit
-[ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
+#[ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
 
 debug main "Pushing system for ${arch}"
 
@@ -187,7 +196,6 @@ fi
 [ "${do_makeconf}"      == "yes" ] && runstep create_makeconf         "Creating custom make.conf"
 [ "${do_tree}"          == "yes" ] && runstep fetch_repo_tree         "Fetching repository tree"
 [ "${do_tree}"          == "yes" ] && runstep unpack_repo_tree        "Unpacking repository tree"
-#[ "${do_luks}"          == "yes" ] && runstep install_cryptsetup      "Installing cryptsetup"
 [ "${do_kbin}"          == "yes" ] && runstep copy_kernel             "Copying precompiled kernel"
 [ "${do_kernel}"        == "yes" ] && runstep build_kernel            "Building kernel"
 [ "${do_postnet}"       == "yes" ] && runstep setup_network_post      "Setting up post-install networking"

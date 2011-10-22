@@ -85,7 +85,9 @@ luks_devices(){
                 lukscmd="echo ${boot_password} | cryptsetup -c ${cipher}-cbc-essiv:${hash} luksFormat ${devicetmp} && echo ${boot_password} | cryptsetup luksOpen ${devicetmp} ${luks_mapper}"
                 ;;
         esac
-        [ -n "${lukscmd}" ] && ( spawn "${lukscmd}" || die "could not luks: ${lukscmd}" )
+        if [ -n "${lukscmd}" ]; then
+            spawn "${lukscmd}" || die "could not luks: ${lukscmd}"
+        fi
     done
     unset boot_password # we don't need it anymore
 }
@@ -184,7 +186,9 @@ mount_network_shares() {
 
 fetch_stage_tarball() {
     debug fetch_stage_tarball "fetching stage tarball"
-    [ -n ${stage_uri} ] && ( fetch "${stage_uri}" "${chroot_dir}/$(get_filename_from_uri ${stage_uri})" || die "Could not fetch stage tarball" )
+    if [ -n ${stage_uri} ]; then
+        fetch "${stage_uri}" "${chroot_dir}/$(get_filename_from_uri ${stage_uri})" || die "Could not fetch stage tarball"
+    fi
 }
 
 unpack_stage_tarball() {
@@ -311,13 +315,6 @@ unpack_repo_tree() {
         fi
     fi
 }
-
-#install_cryptsetup() {
-#    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
-#    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
-#    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
-#    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
-#}
 
 copy_kernel() {
     spawn_chroot "mount /boot"
