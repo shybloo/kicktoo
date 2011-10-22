@@ -43,12 +43,6 @@ has() {
     fi
 }
 
-# check for required programs on livecd
-for a in bash curl fdisk grep shred egrep mount swapoff swapon mke2fs wget chroot tar whoami hostname partprobe # cryptsetup unxz dialog
-do
-    has "${a}"
-done
-
 import() {
     module=$1
     if source modules/${module}.sh &>/dev/null ; then
@@ -144,6 +138,17 @@ do
             ;;
     esac
 done
+
+# check for required programs on livecd
+for a in bash curl fdisk grep shred egrep mount swapoff swapon mke2fs wget chroot tar whoami hostname partprobe
+do  
+    has "${a}"
+done
+
+if [ -n "$(grep xz ${profile})"  ]; then
+    has unxz
+fi
+
 if [ -n "${server}" ]; then
     server_init
     if server_get_profile; then
