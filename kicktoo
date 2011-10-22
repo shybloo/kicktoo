@@ -144,40 +144,31 @@ done
 
 if [ -n "${server}" ]; then
     server_init
-    if server_get_profile; then
-        profile="/tmp/kicktoo_profile"
-    fi
+    server_get_profile && profile="/tmp/kicktoo_profile"
 fi
 
-if [ -z "${profile}" ]; then
-    usage "You must specify a profile"
+[ -z "${profile}" ]   && ( usage "You must specify a profile" ; exit 1 )
+[ ! -f "${profile}" ] && ( error "Specified profile does not exist!" ; exit 1 )
+
+# load profile
+source "${profile}"
+# profile variables are now accessible
+# export  variables are now accessible (i.e. do_luks) from config.sh functions
+
+if ! touch ${logfile} 2>/dev/null; then
+    error "Logfile is not writeable!"
     exit 1
 fi
 
-if [ ! -f "${profile}" ]; then
-    error "Specified profile does not exist!"
-    exit 1
-else
-    # load profile
-    source "${profile}"
-    # profile variables are now accessible
-    # export  variables are now accessible (i.e. do_luks) from config.sh functions
+[ "${do_raid}" == "yes" ]      && has "mdadm"
+[ "${do_lvm}"  == "yes" ]      && has "pvcreate"
+[ "${do_luks}" == "yes" ]      && has "cryptsetup"
+[ -n "$(grep xz ${profile})" ] && has "unxz"
 
-    if ! touch ${logfile} 2>/dev/null; then
-        error "Logfile is not writeable!"
-        exit 1
-    fi
+arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
 
-    [ "${do_raid}" == "yes" ]       && has "mdadm"
-    [ "${do_lvm}"  == "yes" ]       && has "pvcreate"
-    [ "${do_luks}" == "yes" ]       && has "cryptsetup"
-    [ -n "$(grep xz ${profile})"  ] && has "unxz"
-
-    arch=$(get_arch) ; [ -z "${arch}" ] && die "Could not determine system architecture!"
-
-    # call sanity_check_config if 'kicktoo -s <profile>' is run and exit
-    [ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
-fi
+# call sanity_check_config if 'kicktoo -s <profile>' is run and exit
+[ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
 
 debug main "Pushing system for ${arch}"
 
