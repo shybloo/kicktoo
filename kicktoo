@@ -29,7 +29,7 @@ do_services=0
 trap "failure_cleanup" TERM KILL INT QUIT ABRT
 
 # can't hurt
-[ "$(whoami)" != "root" ] && echo "You must be root" ; exit 1
+[ "$(whoami)" = "root" ] || ( echo "You must be root" ; exit 1 )
 
 has() {
     if ( which $1 &>/dev/null ) ; then
