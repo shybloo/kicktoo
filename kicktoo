@@ -5,7 +5,6 @@ VERSION=0.3.0
 debug=0
 verbose=0
 quiet=0
-#sanitycheck=0
 
 do_part=0
 do_raid=0
@@ -71,7 +70,6 @@ Options:
     -d, --debug           Output debugging messages
     -q, --quiet           Only output fatal error messages
 EOF
-#    -s, --sanity-check    Sanity check install profile
 #    -c, --client <host>   Act as a client and connect to a kicktoo daemon
     cat <<FOE
     --version             Print version
@@ -99,9 +97,6 @@ do
             usage
             exit 0
             ;;
-#        -s|--sanity-check)
-#            sanitycheck=1
-#            ;;
         -d|--debug)
             debug=1
             ;;
@@ -172,8 +167,6 @@ source "${profile}"
 [ "${do_lvm}"  == "yes" ]      && has "pvcreate"
 [ "${do_luks}" == "yes" ]      && has "cryptsetup"
 [ -n "$(grep xz ${profile})" ] && has "unxz"
-# call sanity_check_config if 'kicktoo -s <profile>' is run and exit
-#[ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
 
 # make sure it's clean before
 runstep starting_cleanup                                              "Cleaning up"
