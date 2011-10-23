@@ -5,7 +5,7 @@ VERSION=0.3.0
 debug=0
 verbose=0
 quiet=0
-sanitycheck=0
+#sanitycheck=0
 
 do_part=0
 do_raid=0
@@ -99,9 +99,9 @@ do
             usage
             exit 0
             ;;
-        -s|--sanity-check)
-            sanitycheck=1
-            ;;
+#        -s|--sanity-check)
+#            sanitycheck=1
+#            ;;
         -d|--debug)
             debug=1
             ;;

@@ -1,9 +1,7 @@
-sanity_check_config_bootloader() {
-    if [ -z "${bootloader}" ]; then
-        warn "bootloader not set...assuming grub"
-        bootloader="grub"
-    fi
-}
+# if [ -z "${bootloader}" ]; then
+#     warn "bootloader not set...assuming grub"
+#     bootloader="grub"
+# fi
 
 configure_bootloader_grub() {
     debug configure_bootloader_grub "configuring /boot/grub/grub.conf"

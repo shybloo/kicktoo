@@ -1,9 +1,7 @@
-sanity_check_config_bootloader() {
-    if [ -z "${bootloader}" ]; then
-        warn "bootloader not set...assuming silo"
-        bootloader="silo"
-    fi
-}
+# if [ -z "${bootloader}" ]; then
+#     warn "bootloader not set...assuming silo"
+#     bootloader="silo"
+# fi
 
 configure_bootloader_silo() {
     local boot_root="$(get_boot_and_root)"

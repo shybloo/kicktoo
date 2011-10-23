@@ -1,9 +1,7 @@
-sanity_check_config_bootloader() {
-    if [ -z "${bootloader}" ]; then
-        warn "bootloader not set...assuming palo"
-        bootloader="palo"
-    fi
-}
+# if [ -z "${bootloader}" ]; then
+#    warn "bootloader not set...assuming palo"
+#    bootloader="palo"
+# fi
 
 configure_bootloader_palo() {
     local boot_root="$(get_boot_and_root)"

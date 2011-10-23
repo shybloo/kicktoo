@@ -68,10 +68,6 @@ fdisk_command() {
 #   return $?
 }
 
-sanity_check_config_partition() {
-    debug sanity_check_config_partition "no arch-specific partitioning config sanity check function"
-}
-
 local arch=$(get_arch)
 if [ -f "modules/partition_${arch}.sh" ] || [ -f "/usr/lib/kicktoo-${VERSION}/modules/partition_${arch}.sh" ]; then
     debug partition.sh "loading arch-specific module partition_${arch}.sh"

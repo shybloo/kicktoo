@@ -1,7 +1,3 @@
-sanity_check_config_partition() {
-    warn "  TODO: sanity checking partition config for x86"
-}
-
 create_disklabel() {
     local device=$1
     

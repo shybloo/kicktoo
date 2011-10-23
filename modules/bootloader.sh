@@ -65,10 +65,6 @@ get_device_and_partition_from_devnode() {
     echo ${devnode} | sed -e 's:p\?\([0-9]\+\)$:|\1:'
 }
 
-sanity_check_config_bootloader() {
-    debug sanity_check_config_bootloader "no arch-specific bootloader config sanity check function"
-}
-
 local arch=$(get_arch)
 if [ -f "modules/bootloader_${arch}.sh" ] || [ -f "/usr/lib/kicktoo-${VERSION}/modules/bootloader_${arch}.sh" ]; then
     debug bootloader.sh "loading arch-specific module bootloader_${arch}.sh"
