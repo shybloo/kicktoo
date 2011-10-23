@@ -23,14 +23,14 @@ tree_type     snapshot  http://distfiles.gentoo.org/snapshots/portage-latest.tar
 #tree_type               sync
 
 # compile kernel from sources using the right .config
-kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
+kernel_config_file      $(pwd)/kconfig/dedibox-SC-${arch}-kernel.config
 kernel_sources          gentoo-sources
 genkernel_opts          --loglevel=5
 
 # ship the binary kernel instead of compiling (faster)
-#kernel_binary           $(pwd)/kbin/kernel-genkernel-x86-2.6.39-gentoo-r3
-#initramfs_binary        $(pwd)/kbin/initramfs-genkernel-x86-2.6.39-gentoo-r3
-#systemmap_binary        $(pwd)/kbin/System.map-genkernel-x86-2.6.39-gentoo-r3
+#kernel_binary           $(pwd)/kbin/kernel-genkernel-${arch}-2.6.39-gentoo-r3
+#initramfs_binary        $(pwd)/kbin/initramfs-genkernel-${arch}-2.6.39-gentoo-r3
+#systemmap_binary        $(pwd)/kbin/System.map-genkernel-${arch}-2.6.39-gentoo-r3
 
 timezone                UTC
 rootpw                  a

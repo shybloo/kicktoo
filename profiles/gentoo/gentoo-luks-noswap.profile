@@ -11,7 +11,11 @@ mountfs /dev/sda1        ext2 /boot
 mountfs /dev/mapper/root ext4 / noatime
 
 # retrieve latest autobuild stage version for stage_uri
-wget -q http://distfiles.gentoo.org/releases/${arch}/autobuilds/latest-stage3-$(uname -m).txt -O /tmp/stage3.version
+if [ "${arch}" == "x86" ]; then
+    wget -q http://distfiles.gentoo.org/releases/${arch}/autobuilds/latest-stage3-$(uname -m).txt -O /tmp/stage3.version
+elif [ "${arch}" == "amd64" ]; then
+    wget -q http://distfiles.gentoo.org/releases/${arch}/autobuilds/latest-stage3-${arch}.txt -O /tmp/stage3.version
+fi
 latest_stage_version=$(cat /tmp/stage3.version | grep tar.bz2)
 
 stage_uri               http://distfiles.gentoo.org/releases/${arch}/autobuilds/${latest_stage_version}
@@ -24,9 +28,9 @@ kernel_sources          gentoo-sources
 genkernel_opts          --loglevel=5 --luks
 
 # ship the binary kernel instead of compiling (faster)
-#kernel_binary           $(pwd)/kbin/kernel-genkernel-x86-2.6.39-gentoo-r3
-#initramfs_binary        $(pwd)/kbin/initramfs-genkernel-x86-2.6.39-gentoo-r3
-#systemmap_binary        $(pwd)/kbin/System.map-genkernel-x86-2.6.39-gentoo-r3
+#kernel_binary           $(pwd)/kbin/kernel-genkernel-${arch}-2.6.39-gentoo-r3
+#initramfs_binary        $(pwd)/kbin/initramfs-genkernel-${arch}-2.6.39-gentoo-r3
+#systemmap_binary        $(pwd)/kbin/System.map-genkernel-${arch}-2.6.39-gentoo-r3
 
 timezone                UTC
 bootloader              grub
