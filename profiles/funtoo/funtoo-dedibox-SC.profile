@@ -18,7 +18,7 @@ fi
 tree_type     snapshot  http://ftp.osuosl.org/pub/funtoo/funtoo-stable/snapshots/portage-current.tar.xz
 
 # compile kernel from sources using the right .config
-kernel_config_file      $(pwd)/kconfig/dedibox-SC-x86-kernel.config
+kernel_config_file      $(pwd)/kconfig/dedibox-SC-${arch}-kernel.config
 kernel_sources          gentoo-sources
 genkernel_opts          --loglevel=5
 
