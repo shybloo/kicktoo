@@ -10,7 +10,11 @@ mountfs /dev/sda1 ext2 /boot
 mountfs /dev/sda2 swap
 mountfs /dev/sda3 ext4 / noatime
 
-stage_uri               http://ftp.osuosl.org/pub/funtoo/funtoo-stable/x86-32bit/$(uname -m)/stage3-current.tar.xz
+if [ "${arch}" == "x86" ]; then
+    stage_uri               http://ftp.osuosl.org/pub/funtoo/funtoo-stable/x86-32bit/$(uname -m)/stage3-current.tar.xz
+elif [ "${arch}" == "amd64" ]; then
+    stage_uri               http://ftp.osuosl.org/pub/funtoo/funtoo-stable/x86-64bit/generic_64/stage3-current.tar.xz
+fi  
 tree_type   snapshot    http://ftp.osuosl.org/pub/funtoo/funtoo-stable/snapshots/portage-current.tar.xz
 
 cat /proc/config.gz | gzip -d > /dotconfig
