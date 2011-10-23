@@ -21,40 +21,19 @@ To use Kicktoo:
 
 7) Reboot
 
--------------------
-= Tested Profiles =
--------------------
+#
+# Tested Profiles for x86/i686/x486/amd64
+#
 
 gentoo/
-|-- amd64
-|   |-- gentoo-amd64.profile
-|   |-- gentoo-dedibox-SC-amd64-kbin.profile
-|   |-- gentoo-dedibox-SC-amd64.profile
-|   |-- gentoo-luks-amd64.profile
-|   |-- gentoo-luks-noswap-amd64.profile
-|   |-- gentoo-lvm-amd64.profile
-|   `-- gentoo-noboot-amd64.profile
-|-- i486
-|   |-- gentoo-dedibox-SC-i486-kbin.profile
-|   |-- gentoo-dedibox-SC-i486.profile
-|   |-- gentoo-i486.profile
-|   |-- gentoo-luks-i486.profile
-|   |-- gentoo-luks-noswap-i486.profile
-|   |-- gentoo-lvm-i486.profile
-|   `-- gentoo-noboot-i486.profile
-|-- i686
-|   |-- gentoo-dedibox-SC-i686-kbin.profile
-|   |-- gentoo-dedibox-SC-i686.profile
-|   |-- gentoo-i686.profile
-|   |-- gentoo-luks-i686.profile
-|   |-- gentoo-luks-noswap-i686.profile
-|   |-- gentoo-lvm-i686.profile
-|   `-- gentoo-noboot-i686.profile
-`-- x86
-    `-- gentoo-ltsp-x86.profile
+|-- gentoo-dedibox-SC.profile
+|-- gentoo-ltsp.profile
+|-- gentoo-luks-noswap.profile
+|-- gentoo-luks.profile
+|-- gentoo-lvm.profile
+|-- gentoo-noboot.profile
+`-- gentoo.profile
 funtoo/
-`-- i686
-    |-- funtoo-dedibox-SC-i686-kbin.profile
-    |-- funtoo-dedibox-SC-i686.profile
-    |-- funtoo-i686-kbin.profile
-    `-- funtoo-i686.profile
+|-- funtoo-dedibox-SC.profile
+`-- funtoo.profile
+
