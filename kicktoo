@@ -175,7 +175,10 @@ source "${profile}"
 # call sanity_check_config if 'kicktoo -s <profile>' is run and exit
 #[ "${sanitycheck}" = "1" ] && ( runstep sanity_check_config "Sanity checking config" ; exit 0 )
 
-debug main "Pushing system for ${arch}"
+# make sure it's clean before
+runstep starting_cleanup                                              "Cleaning up"
+
+debug main                                                            "Pushing system for ${arch}"
 
 run_pre_install_script                                                "Running pre-install script if any"
 

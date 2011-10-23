@@ -471,6 +471,22 @@ run_post_install_script() {
     fi
 }
 
+starting_cleanup() {
+    for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
+        spawn "umount ${mnt}"                                       || warn "  could not unmount ${mnt}"
+        sleep 0.3
+    done
+    for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
+        spawn "swapoff ${swap}"                                     || warn "  could not deactivate swap on ${swap}"
+    done
+    for array in $(set | grep '^mdraid_' | cut -d= -f1 | sed -e 's:^mdraid_::' | sort); do
+        spawn "mdadm --manage --stop /dev/${array}" || die "could not stop mdraid array ${array}"
+    done
+    for luksdev in $(ls /dev/mapper | grep -v control); do
+        spawn "cryptsetup remove ${luksdev}"                        || warn "could not remove luks device /dev/mapper/${luksdev}"
+    done
+}
+
 finishing_cleanup() {
     spawn "cp ${logfile} ${chroot_dir}/root/$(basename ${logfile})" || warn "could not copy install logfile into chroot"
     for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
@@ -479,6 +495,9 @@ finishing_cleanup() {
     done
     for swap in $(awk '/^\// { print $1; }' /proc/swaps); do
         spawn "swapoff ${swap}"                                     || warn "  could not deactivate swap on ${swap}"
+    done
+    for array in $(set | grep '^mdraid_' | cut -d= -f1 | sed -e 's:^mdraid_::' | sort); do
+        spawn "mdadm --manage --stop /dev/${array}" || die "could not stop mdraid array ${array}"
     done
     for luksdev in $(ls /dev/mapper | grep -v control); do
         spawn "cryptsetup remove ${luksdev}"                        || warn "could not remove luks device /dev/mapper/${luksdev}"
