@@ -161,6 +161,13 @@ makeconf_line() {
     eval "makeconf_${makevar}=\"${makeval}\""
 }
 
+locale_set() {
+ 	do_locale=yes
+	local locale=$1
+
+	system_locale="${locale}"
+}
+
 tree_type() {
     do_tree=yes
     local type=$1

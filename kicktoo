@@ -11,6 +11,7 @@ do_raid=0
 do_lvm=0
 do_luks=0
 do_makeconf=0
+do_locale=0
 do_kernel=0
 do_postnet=0
 do_password=0
@@ -189,6 +190,7 @@ if [ "${do_stage_uri}"  == "yes" ] || [ "${do_stage_path}" == "yes" ]; then
  runstep setup_fstab                                                  "Setting up /etc/fstab"
 fi
 [ "${do_makeconf}"      == "yes" ] && runstep create_makeconf         "Creating custom make.conf"
+[ "${do_locale}"        == "yes" ] && runstep set_locale              "Setting locale"
 [ "${do_tree}"          == "yes" ] && runstep fetch_repo_tree         "Fetching repository tree"
 [ "${do_tree}"          == "yes" ] && runstep unpack_repo_tree        "Unpacking repository tree"
 [ "${do_kbin}"          == "yes" ] && runstep copy_kernel             "Copying precompiled kernel"
