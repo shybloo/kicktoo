@@ -243,6 +243,13 @@ create_makeconf() {
     IFS=$O
 }
 
+set_locale() {
+	# make sure locale.gen is not overwritten automatically
+	export CONFIG_PROTECT="/etc/locale.gen"
+	echo "LANG=${system_locale}" >> ${chroot_dir}/etc/env.d/02locale
+	grep ${system_locale} /usr/share/i18n/SUPPORTED > ${chroot_dir}/etc/locale.gen
+}
+
 prepare_chroot() {
     debug prepare_chroot "copying /etc/resolv.conf into chroot"
     spawn "cp /etc/resolv.conf ${chroot_dir}/etc/resolv.conf"   || die "could not copy /etc/resolv.conf into chroot"
