@@ -233,7 +233,7 @@ create_makeconf() {
     O=$IFS
     IFS=$(echo -en "\n\b")
 
-    for var in $(set | grep ^makeconf_); do
+    for var in $(set | grep ^makeconf_[A-Z]); do
         makeconfline=$(echo $var | sed s/makeconf_// | sed s/\'/\"/g )
         cat >> ${chroot_dir}/etc/make.conf <<- EOF
 		${makeconfline}
