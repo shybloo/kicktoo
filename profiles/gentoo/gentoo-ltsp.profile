@@ -1,3 +1,7 @@
+# Reference Kicktoo profile implementation for LTSP
+# used to build a Gentoo LTSP thin client chroot
+# see also: https://launchpad.net/ltsp
+
 # setting config vars
 if [ -z "${ARCH}" ]; then
 	ARCH="x86"
@@ -19,10 +23,27 @@ if [ -z "${CHROOT}" ]; then
 	CHROOT="${BASE}/${NAME}"
 fi
 
+if [ -z "${LOCALE}" ]; then
+	LOCALE="en_US.UTF-8"
+fi
+
 chroot_dir $CHROOT
 stage_uri "${STAGE_URI}"
-tree_type none
 rootpw password
+makeconf_line MAKEOPTS "${MAKEOPTS}"
+makeconf_line USE "alsa pulseaudio svg xml X -cups"
+makeconf_line EMERGE_DEFAULT_OPTS "--usepkg --buildpkg"
+makeconf_line CONFIG_PROTECT_MASK "/etc /etc/conf.d /etc/init.d"
+makeconf_line CLEAN_DELAY 0
+makeconf_line EMERGE_WARNING_DELAY 0
+if [ -n "${MIRRORS}" ]; then
+	makeconf_line GENTOO_MIRRORS "${MIRRORS}"
+fi
+if [ "${CCACHE}" == "true" ]; then
+	makeconf_line FEATURES "ccache"
+	makeconf_line CCACHE_SIZE "4G"
+fi
+locale_set "${LOCALE}"
 kernel_sources gentoo-sources
 kernel_builder genkernel
 timezone UTC
@@ -33,61 +54,27 @@ rcadd ltsp-client default
 
 
 # Step control extra functions
-skip unpack_repo_tree
+mount_bind() {
+	local source="${1}"
+	local dest="${2}"
 
-post_unpack_stage_tarball() {
-	# protecting locale.gen from updating, /etc is set in CONFIG_PROTECT_MASK
-	export CONFIG_PROTECT="/etc/locale.gen"
-
-	if [ -n "$LOCALE" ]; then
-		echo "LANG=${LOCALE}" >> ${chroot_dir}/etc/env.d/02locale
-		grep ${LOCALE} /usr/share/i18n/SUPPORTED > ${chroot_dir}/etc/locale.gen
-	else
-		if [ -f /etc/env.d/02locale ]; then
-			cp /etc/env.d/02locale ${chroot_dir}/etc/env.d/
-		fi
-
-		cat > ${chroot_dir}/etc/locale.gen <<- EOF
-		en_US ISO-8859-1
-		en_US.UTF-8 UTF-8
-		EOF
-	fi
+	spawn "mkdir -p ${source}"
+	spawn "mkdir -p ${dest}"
+	spawn "mount ${source} ${dest} -o bind"
+	echo "${dest}" >> /tmp/install.umount
 }
 
-pre_fetch_repo_tree() {
-	# bind mounting portage
-	spawn "mkdir ${chroot_dir}/usr/portage"
-	spawn "mount /usr/portage ${chroot_dir}/usr/portage -o bind"
-	echo "${chroot_dir}/usr/portage" >> /tmp/install.umount
-
-	# bind mounting binary package dir
-	spawn "mkdir -p /usr/portage/packages/$ARCH"
-	spawn_chroot "mkdir -p /usr/portage/packages"
-	spawn "mount /usr/portage/packages/$ARCH ${chroot_dir}/usr/portage/packages -o bind"
-	echo "${chroot_dir}/usr/portage/packages" >> /tmp/install.umount
-
+post_unpack_stage_tarball() {
+	# bind mounting portage and binary package dir
+	mount_bind "/usr/portage" "${chroot_dir}/usr/portage"
+	mount_bind "/usr/portage/packages/${ARCH}" "${chroot_dir}/usr/portage/packages"
+	
 	# bind mounting layman, for overlay packages
 	# TODO: remove this mounting when the ltsp ebuilds are in the tree
-	spawn "mkdir -p ${chroot_dir}/var/lib/layman"
-	spawn "mount /var/lib/layman ${chroot_dir}/var/lib/layman -o bind"
-	echo "${chroot_dir}/var/lib/layman" >> /tmp/install.umount
-
-	if [ -n "${MIRRORS}" ]; then
-		echo "GENTOO_MIRRORS="${MIRRORS}"" >> ${chroot_dir}/etc/make.conf
-	fi
-
-	# TODO: allow overriding of all these variables
-	cat >> ${chroot_dir}/etc/make.conf <<- EOF
-	MAKEOPTS="${MAKEOPTS}"
-
-	USE="alsa pulseaudio svg xml X -cups"
-
-	EMERGE_DEFAULT_OPTS="--usepkg --buildpkg"
-	CONFIG_PROTECT_MASK="/etc /etc/conf.d /etc/init.d"
-	CLEAN_DELAY=0
-	EMERGE_WARNING_DELAY=0
+	mount_bind "/var/lib/layman" "${chroot_dir}/var/lib/layman"
 
 	# TODO: don't add this by default
+	cat >> ${chroot_dir}/etc/make.conf <<- EOF
 	source /var/lib/layman/make.conf
 	EOF
 
@@ -101,7 +88,6 @@ pre_fetch_repo_tree() {
 
 	cat >> ${chroot_dir}/etc/portage/package.keywords <<- EOF
 	net-misc/ltsp-client
-	sys-fs/ltspfs
 	x11-misc/ldm
 	EOF
 
@@ -135,21 +121,9 @@ pre_build_kernel() {
 
     genkernel_opts --makeopts="${MAKEOPTS}"
 
-	# perhaps in kicktoo program
-	if [[ $CCACHE == "true" ]]; then
-        spawn_chroot "emerge ccache"
-		spawn_chroot "mkdir -p /var/tmp/ccache"
-		spawn "mkdir -p /var/tmp/ccache/${ARCH}"
-		spawn "mount /var/tmp/ccache/${ARCH} ${chroot_dir}/var/tmp/ccache -o bind"
-		echo "${chroot_dir}/var/tmp/ccache" >> /tmp/install.umount
-
-		cat >> ${chroot_dir}/etc/make.conf <<- EOF
-		FEATURES="ccache"
-		EOF
-
-		export CCACHE_DIR="/var/tmp/ccache"
-		export CCACHE_SIZE="4G"
-
+	if [ "${CCACHE}" == "true" ]; then
+		spawn_chroot "emerge ccache"
+		mount_bind "/var/tmp/ccache/${ARCH}" "${chroot_dir}/var/tmp/ccache"
 		genkernel_opts --makeopts="${MAKEOPTS}" --kernel-cc="/usr/lib/ccache/bin/gcc" --utils-cc="/usr/lib/ccache/bin/gcc"
 	fi
 }
