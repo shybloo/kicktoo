@@ -493,7 +493,7 @@ cleanup() {
     for array in $(set | grep '^mdraid_' | cut -d= -f1 | sed -e 's:^mdraid_::' | sort); do
         spawn "mdadm --manage --stop /dev/${array}" || die "could not stop mdraid array ${array}"
     done
-    if [ -d "/proc/mapper" ]; then
+    if [ -d "/dev/mapper" ]; then
         for luksdev in $(ls /dev/mapper | grep -v control); do
             spawn "cryptsetup remove ${luksdev}" || warn "could not remove luks device /dev/mapper/${luksdev}"
         done
