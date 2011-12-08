@@ -137,8 +137,12 @@ extra_packages          dhcpcd # openssh syslog-ng
 # post_copy_kernel() {
 # }
 
-# pre_build_kernel() {
-# }
+pre_build_kernel() {
+    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
+    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
+    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
+    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
+}
 # skip build_kernel
 # post_build_kernel() {
 # }
@@ -189,11 +193,6 @@ extra_packages          dhcpcd # openssh syslog-ng
 # }
 # skip install_extra_packages
 post_install_extra_packages() {
-    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
-    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
-    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
-    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
-
     # this tells where to find the swap to encrypt
     cat >> ${chroot_dir}/etc/conf.d/dmcrypt <<EOF
 swap=swap
