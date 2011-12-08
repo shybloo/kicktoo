@@ -133,8 +133,12 @@ hostname                gentoo-luks
 # post_copy_kernel() {
 # }
 
-# pre_build_kernel() {
-# }
+pre_build_kernel() {
+    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
+    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
+    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
+    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
+}
 # skip build_kernel
 # post_build_kernel() {
 # }
@@ -184,12 +188,8 @@ hostname                gentoo-luks
 # pre_install_extra_packages() {
 # }
 # skip install_extra_packages
-post_install_extra_packages() {
-    # FIXME don't global USE static-libs but apply only for cryptsetup and deps
-    spawn_chroot "emerge gentoolkit"    || die "could not merge getoolkit"
-    spawn_chroot "euse -E static-libs"  || die "could not enable static-libs USE"
-    spawn_chroot "emerge cryptsetup"    || die "could not emerge cryptsetup"
-}
+# post_install_extra_packages() {
+# }
 
 # pre_add_and_remove_services() {
 # }
