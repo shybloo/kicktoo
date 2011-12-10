@@ -64,7 +64,7 @@ fdisk_command() {
     debug fdisk_command "running fdisk command '${cmd}' on device ${device}"
     spawn "partprobe"
     spawn "echo -en '${cmd}\nw\n' | fdisk ${device}"
-    spawn "partprobe"
+#    spawn "partprobe"
 #   return $?
 }
 
