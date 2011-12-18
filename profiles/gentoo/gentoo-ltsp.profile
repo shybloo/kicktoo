@@ -3,11 +3,7 @@
 # see also: https://launchpad.net/ltsp
 
 # setting config vars
-if [ -z "${ARCH}" ]; then
-	ARCH="x86"
-fi
-
-if [ "${ARCH}" = "x86" ]; then
+if [ "${ARCH}" = "i486" ] || [ "${ARCH}" = "i686" ]; then
 	use_linux32
 fi
 
@@ -27,6 +23,10 @@ if [ -z "${LOCALE}" ]; then
 	LOCALE="en_US.UTF-8"
 fi
 
+if [ -z "${TIMEZONE}" ]; then
+	TIMEZONE="$(</etc/timezone)"
+fi
+
 chroot_dir $CHROOT
 stage_uri "${STAGE_URI}"
 rootpw password
@@ -36,17 +36,21 @@ makeconf_line EMERGE_DEFAULT_OPTS "--usepkg --buildpkg"
 makeconf_line CONFIG_PROTECT_MASK "/etc /etc/conf.d /etc/init.d"
 makeconf_line CLEAN_DELAY 0
 makeconf_line EMERGE_WARNING_DELAY 0
+makeconf_line INSTALL_MASK "TODO.bz2 AUTHORS.bz2 NEWS.bz2 README.bz2 ChangeLog.bz2"
+
 if [ -n "${MIRRORS}" ]; then
 	makeconf_line GENTOO_MIRRORS "${MIRRORS}"
 fi
+
 if [ "${CCACHE}" == "true" ]; then
 	makeconf_line FEATURES "ccache"
 	makeconf_line CCACHE_SIZE "4G"
 fi
+
 locale_set "${LOCALE}"
 kernel_sources gentoo-sources
 kernel_builder genkernel
-timezone UTC
+timezone ${TIMEZONE}
 extra_packages ldm ltsp-client dejavu sysklogd ${PACKAGES}
 rcadd sysklogd default
 rcadd ltsp-client-setup boot
@@ -82,32 +86,14 @@ post_unpack_stage_tarball() {
 	# DO NOT DELETE
 	EOF
 
-	# TODO: copy this from elsewhere instead of making it here.
-	# remove packages from here when they are stable
-	spawn "mkdir -p ${chroot_dir}/etc/portage"
-
-	cat >> ${chroot_dir}/etc/portage/package.keywords <<- EOF
-	net-misc/ltsp-client
-	x11-misc/ldm
-	EOF
-
-	# pulseaudio pulls udev[extras]
 	cat >> ${chroot_dir}/etc/portage/package.use <<- EOF
+	# req by pulseaudio
 	sys-fs/udev extras
+	# req by xorg-server
+	dev-libs/libxml2 python
+	# req by mesa
+	x11-libs/libdrm libkms
 	EOF
-}
-
-pre_setup_timezone() {
-	# retrieve chroot timezone from server
-	if [ -z "${TIMEZONE}" ]; then
-		# For OpenRC
-		if [ -e /etc/timezone ]; then
-			TIMEZONE="$(</etc/timezone)"
-		else
-			. /etc/conf.d/clock
-		fi
-	fi
-	timezone ${TIMEZONE}
 }
 
 pre_build_kernel() {
