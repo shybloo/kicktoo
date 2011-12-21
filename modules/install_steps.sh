@@ -480,7 +480,8 @@ run_post_install_script() {
 
 cleanup() {
     if [ -f "/proc/mounts" ]; then
-        for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
+#        for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r | uniq); do
+        for mnt in $(awk '{ print $2; }' /proc/mounts | grep ^${chroot_dir} | sort -r); do
             spawn "umount ${mnt}" || warn "  could not unmount ${mnt}"
             sleep 0.3
         done
@@ -519,8 +520,8 @@ failure_cleanup() {
     #####################################################################
     # FIXME this takes care of umounting a second time ${chroot_dir}/boot
     #       $(mount) does not show it but $(cat /proc/mounts) does, WTF?!
-    if [ -n "$(cat /proc/mounts | grep ${chroot_dir}/boot)" ]; then     #
-        umount ${chroot_dir}/boot                                       #
-    fi                                                                  #
+#    if [ -n "$(cat /proc/mounts | grep ${chroot_dir}/boot)" ]; then     #
+#        umount ${chroot_dir}/boot                                       #
+#    fi                                                                  #
     #####################################################################
 }
